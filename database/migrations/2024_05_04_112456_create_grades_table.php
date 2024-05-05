@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+        Schema::create('grades', function (Blueprint $table) {
+            $table->increments('id'); // bigint(10) の学年id
+            $table->string('name', 255); // varchar(255) の学年名 notnull
+            $table->timestamps(); // 作成日時created_at と 更新日時updated_at のtimestamp
+
         });
     }
 
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('grades');
     }
 };
