@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('email')->unique();//メールアドレス
+            $table->string('password');//管理者パスワード
             $table->timestamps();
         });
     }
