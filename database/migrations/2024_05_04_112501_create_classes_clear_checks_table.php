@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('classes_clear_checks', function (Blueprint $table) {
-            $table->increments('id'); // bigint(10) のid
-            $table->unsignedInteger('users_id'); // 符号なしbigint(10) のユーザーid notnull
-            $table->unsignedInteger('grade_id'); // 符号なしbigint(10) の学年id notnull
+            $table->increments('id'); // int(10) のid
+            $table->unsignedInteger('users_id'); // 符号なしint(10) のユーザーid notnull
+            $table->unsignedInteger('grade_id'); // 符号なしint(10) の学年id notnull
             $table->tinyInteger('clear_flg'); // tinyint(4) 1:クリア、0:未クリア
             // curriculumsテーブルにある同一クラスIDのカリキュラムがすべてcurriculum_progressテーブルにてclear_flg =1になった際、このカラムも1にする。
             $table->timestamps();
