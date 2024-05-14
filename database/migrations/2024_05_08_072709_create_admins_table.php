@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('grades', function (Blueprint $table) {
-            $table->increments('id'); // bigint(10) の学年id
-            $table->string('name', 255); // varchar(255) の学年名 notnull
-            $table->timestamps(); // 作成日時created_at と 更新日時updated_at のtimestamp
-
+        Schema::create('admins', function (Blueprint $table) {
+            $table->id();
+            $table->string('email')->unique();//メールアドレス
+            $table->string('password');//管理者パスワード
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grades');
+        Schema::dropIfExists('admins');
     }
 };
