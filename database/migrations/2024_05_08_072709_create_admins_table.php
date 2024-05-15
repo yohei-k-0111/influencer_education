@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('name');//VARCHAR(255)管理ユーザーネーム
             $table->string('email')->unique();//VARCHAR(255)メールアドレス
             $table->string('password');//VARCHAR(255)管理者パスワード

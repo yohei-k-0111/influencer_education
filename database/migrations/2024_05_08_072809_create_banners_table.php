@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('banners', function (Blueprint $table) {
-            $table->id();
-            $table->string('image', 255)->nullable();//VACHAR(255)バナー画像
+            $table->increments('id');// int(10) のid
+            $table->string('image', 255);//VACHAR(255)バナー画像
             $table->timestamps();
         });
     }
