@@ -14,9 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id'); // int(10)
+            $table->string('name'); // varchar(255) 管理ユーザーネーム
             $table->string('email')->unique();//メールアドレス
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');//管理者パスワード
+            $table->rememberToken();
             $table->timestamps();
         });
     }
