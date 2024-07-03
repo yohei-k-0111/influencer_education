@@ -1,0 +1,20 @@
+.header-button{
+    margin: 10px;
+    margin-left: -30px;
+    background-color: rgb(0, 183, 255);
+    border-radius: 10%;
+    border: none;
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+}
+.logout-button{
+    border: none;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: orange;
+}
+.navbar{
+    background-color: orange;
+    
+}

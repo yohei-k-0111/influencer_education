@@ -1,0 +1,27 @@
+.header-container{
+    height:100%;
+    top: 100%;
+    right: 20%;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+
+.card-body{
+    height:100%;
+    top: 100%;
+    right: 20%;
+    justify-content: center;
+    align-items: center;
+    height: 10vh; 
+}
+
+.btn-warning {
+    position: absolute;
+    top: 240%;
+    width:50%;
+    right: 17%;
+    font-size: 40px;
+    height: auto;
+    cursor: pointer; /* カーソルの形状をポインタに設定 */
+}

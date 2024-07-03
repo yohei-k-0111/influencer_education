@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\LoginController;
+use App\Http\Controllers\admin\RegisterController;
+use App\Http\Controllers\CurriculumsController;
+use App\Http\Controllers\ArticlesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +23,33 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::prefix('admin')->group(function () {
+    Route::view('/login', 'admin.login')->name('admin.login');
+    Route::post('/login', [LoginController::class, 'login'])->name('admin.login.post');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
+    Route::view('/register', 'admin.register')->name('admin.register');
+    Route::post('/register', [RegisterController::class, 'register'])->name('admin.register.post');
+    Route::view('/home', 'admin.home')->middleware('auth:admin')->name('admin.home');
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/top', [App\Http\Controllers\ArticlesController::class, 'top'])->name('top')->middleware('auth');
+Route::get('/articles/news', [ArticlesController::class, 'top']);
+Route::get('/stream', [App\Http\Controllers\CurriculumsController::class, 'user_stream'])->name('stream')->middleware('auth');
+
+// 時間割ページへのルート仮
+Route::get('/jikan-bu', function () {
+    return view('jikanbu');
+})->name('jikanbu');
+
+// 授業進捗ページへのルート仮
+Route::get('/lessons', function () {
+    return view('lessons');
+})->name('lessons');
+
+Route::post('/clear', [CurriculumsController::class, 'clear'])->name('clear');
+
+// プロフィール設定ページへのルート仮
+Route::get('/profile-setting', function () {
+    return view('profile-setting');
+})->name('profile-setting');

@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');//VARCHAR(255)管理ユーザーネーム
-            $table->string('email')->unique();//VARCHAR(255)メールアドレス
-            $table->string('password');//VARCHAR(255)管理者パスワード
+        Schema::create('admins', function (Blueprint $table) {
+            $table->id(); // int(10) のid
+            $table->string('name'); // VARCHAR(255) 管理ユーザーネーム
+            $table->string('email')->unique(); // VARCHAR(255) メールアドレス
+            $table->string('password'); // VARCHAR(255) 管理者パスワード
             $table->rememberToken();
             $table->timestamps();
         });
@@ -30,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->dropColumn('remember_token');
-        });
+        Schema::dropIfExists('admins');
     }
 };

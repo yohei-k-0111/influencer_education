@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id'); // int(10) id
             $table->string('name'); // varchar(255) ユーザーネーム
-            $table->string('name_kana'); // varchar(255) ユーザーネーム カナ
+            $table->string('name_kana')->default(''); // varchar(255) ユーザーネーム カナ
             $table->string('email')->unique(); // varchar(255) メールアドレス
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password'); // varchar(255) パスワード
             $table->string('profile_image')->nullable(); // varchar(255) プロフィール画像
-            $table->unsignedInteger('grade_id'); // 符号なしint(10) 学年id
+            $table->unsignedInteger('grade_id')->nullable(); // 符号なしint(10) 学年id
             $table->rememberToken();
             $table->timestamps();
 

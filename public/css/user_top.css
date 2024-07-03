@@ -1,0 +1,62 @@
+.header ul {
+    background-color: orange;
+    display: flex;
+    justify-content: space-around;
+    padding-left: -10%;
+    padding: 10px;
+    margin-bottom: auto; 
+    list-style-type: none; 
+}
+
+.header li{
+    margin-left: -10%;
+    font-size: 30px;
+}
+.logout{
+    left: 20%;
+}
+
+/*画像を中央に表示する*/
+img {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 255px 255px;
+    height: 255px ;
+}
+/*ボタンを中央寄せにする*/
+.btn-1 {
+    position: absolute;
+    top: 45%;
+    left: 48%;
+    font-size: 20px;
+    background: rgb(255, 255, 255);
+    opacity: 0.5;
+    border: none;
+}
+
+.btn-2 {
+    position: absolute;
+    top: 45%;
+    left: 52%;
+    font-size: 20px;
+    background: rgba(255, 255, 255);
+    opacity: 0.5;
+    border: none;
+}
+
+/*全てのimg要素を非表示にする*/
+#header-container img {
+    display: none;
+}
+
+/*最初に表示したい画像を表示するためのコード*/
+#header-container img:first-child {
+    display: block;
+}
+
+/*お知らせを下に表示する*/
+.container h1{
+    margin-top: 400px;
+}

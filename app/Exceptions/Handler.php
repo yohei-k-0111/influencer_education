@@ -47,4 +47,21 @@ class Handler extends ExceptionHandler
             //
         });
     }
+    /**
+     * Handle unauthenticated users.
+     * 
+     * @parm \Illuminate\http\Request $request
+     * @parm \Throwable $exception
+     * @return \Illminate\http\responese
+     */
+    protected function unauthenticated($request, Throwable $exception) //認証していない状態で認証が必要なページにアクセスするとログインページに飛ばされる
+    {
+        if($request->expectsJson()) {
+            return response()->json(['message' => $exception->getMessage()], 401);
+        }
+        if($request->is('admin') || $request->is('admin/*')) {
+            return redirect()->guest('/admin/login');
+        }
+        return redirect()->guest($exception->redirectTo ?? route('login'));
+    }
 }
