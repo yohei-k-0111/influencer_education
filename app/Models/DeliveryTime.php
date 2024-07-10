@@ -73,7 +73,7 @@ class DeliveryTime extends Model
                 'delivery_to' => $delivery_time['date_to'] . ' ' . $delivery_time['time_to'] . ':00',
             ];
         }
-        // Eloquentでdelivery_timesテーブルを対象にupsertメソッドを使用（データの登録または更新）
+        // Eloquentでupsertメソッドを使用（データの登録または更新）
         // idを参照して存在すれば更新、存在しなければレコードを追加して登録する。
         DeliveryTime::upsert($upsert_data,['id']);
 

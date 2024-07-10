@@ -1,0 +1,684 @@
+
+/* 【共通】 */
+
+/* リセットCSS */
+  /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+  /* Document
+    ========================================================================== */
+
+  /**
+  * 1. Correct the line height in all browsers.
+  * 2. Prevent adjustments of font size after orientation changes in iOS.
+  */
+
+  html {
+    line-height: 1.15; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+  }
+
+  /* Sections
+    ========================================================================== */
+
+  /**
+  * Remove the margin in all browsers.
+  */
+
+  body {
+    margin: 0;
+  }
+
+  /**
+  * Render the `main` element consistently in IE.
+  */
+
+  main {
+    display: block;
+  }
+
+  /**
+  * Correct the font size and margin on `h1` elements within `section` and
+  * `article` contexts in Chrome, Firefox, and Safari.
+  */
+
+  h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+  }
+
+  /* Grouping content
+    ========================================================================== */
+
+  /**
+  * 1. Add the correct box sizing in Firefox.
+  * 2. Show the overflow in Edge and IE.
+  */
+
+  hr {
+    box-sizing: content-box; /* 1 */
+    height: 0; /* 1 */
+    overflow: visible; /* 2 */
+  }
+
+  /**
+  * 1. Correct the inheritance and scaling of font size in all browsers.
+  * 2. Correct the odd `em` font sizing in all browsers.
+  */
+
+  pre {
+    font-family: monospace, monospace; /* 1 */
+    font-size: 1em; /* 2 */
+  }
+
+  /* Text-level semantics
+    ========================================================================== */
+
+  /**
+  * Remove the gray background on active links in IE 10.
+  */
+
+  a {
+    background-color: transparent;
+  }
+
+  /**
+  * 1. Remove the bottom border in Chrome 57-
+  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+  */
+
+  abbr[title] {
+    border-bottom: none; /* 1 */
+    text-decoration: underline; /* 2 */
+    text-decoration: underline dotted; /* 2 */
+  }
+
+  /**
+  * Add the correct font weight in Chrome, Edge, and Safari.
+  */
+
+  b,
+  strong {
+    font-weight: bolder;
+  }
+
+  /**
+  * 1. Correct the inheritance and scaling of font size in all browsers.
+  * 2. Correct the odd `em` font sizing in all browsers.
+  */
+
+  code,
+  kbd,
+  samp {
+    font-family: monospace, monospace; /* 1 */
+    font-size: 1em; /* 2 */
+  }
+
+  /**
+  * Add the correct font size in all browsers.
+  */
+
+  small {
+    font-size: 80%;
+  }
+
+  /**
+  * Prevent `sub` and `sup` elements from affecting the line height in
+  * all browsers.
+  */
+
+  sub,
+  sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+  /* Embedded content
+    ========================================================================== */
+
+  /**
+  * Remove the border on images inside links in IE 10.
+  */
+
+  img {
+    border-style: none;
+  }
+
+  /* Forms
+    ========================================================================== */
+
+  /**
+  * 1. Change the font styles in all browsers.
+  * 2. Remove the margin in Firefox and Safari.
+  */
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    line-height: 1.15; /* 1 */
+    margin: 0; /* 2 */
+  }
+
+  /**
+  * Show the overflow in IE.
+  * 1. Show the overflow in Edge.
+  */
+
+  button,
+  input { /* 1 */
+    overflow: visible;
+  }
+
+  /**
+  * Remove the inheritance of text transform in Edge, Firefox, and IE.
+  * 1. Remove the inheritance of text transform in Firefox.
+  */
+
+  button,
+  select { /* 1 */
+    text-transform: none;
+  }
+
+  /**
+  * Correct the inability to style clickable types in iOS and Safari.
+  */
+
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    appearance: button;
+  }
+
+  /**
+  * Remove the inner border and padding in Firefox.
+  */
+
+  button::-moz-focus-inner,
+  [type="button"]::-moz-focus-inner,
+  [type="reset"]::-moz-focus-inner,
+  [type="submit"]::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+  }
+
+  /**
+  * Restore the focus styles unset by the previous rule.
+  */
+
+  button:-moz-focusring,
+  [type="button"]:-moz-focusring,
+  [type="reset"]:-moz-focusring,
+  [type="submit"]:-moz-focusring {
+    outline: 1px dotted ButtonText;
+  }
+
+  /**
+  * Correct the padding in Firefox.
+  */
+
+  fieldset {
+    padding: 0.35em 0.75em 0.625em;
+  }
+
+  /**
+  * 1. Correct the text wrapping in Edge and IE.
+  * 2. Correct the color inheritance from `fieldset` elements in IE.
+  * 3. Remove the padding so developers are not caught out when they zero out
+  *    `fieldset` elements in all browsers.
+  */
+
+  legend {
+    box-sizing: border-box; /* 1 */
+    color: inherit; /* 2 */
+    display: table; /* 1 */
+    max-width: 100%; /* 1 */
+    padding: 0; /* 3 */
+    white-space: normal; /* 1 */
+  }
+
+  /**
+  * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+  */
+
+  progress {
+    vertical-align: baseline;
+  }
+
+  /**
+  * Remove the default vertical scrollbar in IE 10+.
+  */
+
+  textarea {
+    overflow: auto;
+  }
+
+  /**
+  * 1. Add the correct box sizing in IE 10.
+  * 2. Remove the padding in IE 10.
+  */
+
+  [type="checkbox"],
+  [type="radio"] {
+    box-sizing: border-box; /* 1 */
+    padding: 0; /* 2 */
+  }
+
+  /**
+  * Correct the cursor style of increment and decrement buttons in Chrome.
+  */
+
+  [type="number"]::-webkit-inner-spin-button,
+  [type="number"]::-webkit-outer-spin-button {
+    height: auto;
+  }
+
+  /**
+  * 1. Correct the odd appearance in Chrome and Safari.
+  * 2. Correct the outline style in Safari.
+  */
+
+  [type="search"] {
+    appearance: textfield; /* 1 */
+    outline-offset: -2px; /* 2 */
+  }
+
+  /**
+  * Remove the inner padding in Chrome and Safari on macOS.
+  */
+
+  [type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  /**
+  * 1. Correct the inability to style clickable types in iOS and Safari.
+  * 2. Change font properties to `inherit` in Safari.
+  */
+
+  ::-webkit-file-upload-button {
+    -webkit-appearance: button; /* 1 */
+    font: inherit; /* 2 */
+  }
+
+  /* Interactive
+    ========================================================================== */
+
+  /*
+  * Add the correct display in Edge, IE 10+, and Firefox.
+  */
+
+  details {
+    display: block;
+  }
+
+  /*
+  * Add the correct display in all browsers.
+  */
+
+  summary {
+    display: list-item;
+  }
+
+  /* Misc
+    ========================================================================== */
+
+  /**
+  * Add the correct display in IE 10+.
+  */
+
+  template {
+    display: none;
+  }
+
+  /**
+  * Add the correct display in IE 10.
+  */
+
+  [hidden] {
+    display: none;
+  }
+
+/* フォント指定 */
+body {
+  font-family: "メイリオ", Meiryo, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS Pゴシック", "MS PGothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+/* 他共通Style */
+  ul {
+    padding-left: 0; /* リストマーカー分余白消去 */
+  }
+  li {
+    list-style-type: none; /* リストマーカー消去 */
+  }
+  table {
+    border-collapse: collapse; /* 隣り合うセルの境界線を重ねて表示 */
+    border-spacing: 0; /* 境界線の間隔なし */
+  }
+  a {
+    text-decoration: none; /* 下線・色・スタイル消去 */
+    color: black;
+  }
+  /* 仮header */
+  .navbar {
+    background-color: aqua;
+  }
+  .navbar-nav {
+    display: flex;
+  }
+  .navbar-nav li {
+    margin-right: 30px;
+  }
+  /* 共通アウトライン */
+  .main-content {
+    width: 1280px;
+    margin: auto;
+  }
+  .main-content--header {
+    margin: 0 25px 20px 25px;
+  }
+  .main-content--header__alert {
+    width: 600px;
+    margin: 0 auto;
+  }
+  .main-content--body {
+    margin: 0 50px 50px 50px;
+    overflow: auto;
+  }
+
+  /* 共通フォント */
+  .main-content--header__display-title {
+    /* 画面タイトル */
+    font-weight: lighter;
+  }
+  .alert-danger {
+    /* エラーメッセージ */
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+  }
+
+  /* 戻るボタン */
+  .button--return {
+    margin: 0px 20px;
+  }
+
+
+/* 【授業一覧画面】 */
+
+  /* 全体レイアウト */
+  .main-content--header__middle {
+    display: flex;
+  }
+  .main-content--header__create-button {
+    margin: 0 75px 0 25px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .main-content--body__grades {
+    width: 200px;
+    float: left;
+    margin-top: 60px;
+  }
+  .main-content--body__curriculums {
+    width: 980px;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  /* フラッシュメッセージ */
+  .main-content--header__flash-message {
+    width: 100%;
+  }
+  .main-content--header__flash-message div {
+    text-align: center;
+    width: 400px;
+    margin: 0 auto;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+  }
+
+  /* 授業一覧部分 */
+  .curriculum-content--outline {
+    border: 2px solid rgb(190, 190, 190);
+    width: 300px;
+    height: 375px;
+    margin: 10px;
+  }
+  .curriculum-content {
+    width: 280px;
+    margin: 5px auto;
+  }
+  .curriculum-content__button {
+    display: flex;
+  }
+  .curriculum-content__thumbnail {
+    /* サムネイル画像表示サイズ（授業一覧） */
+    width: 280px;
+    height: 150px;
+    text-align: center;
+  }
+  .img--list {
+    max-width: 280px;
+    max-height: 150px;
+  }
+  .curriculum-content__title {
+    margin-bottom: 20px;
+  }
+  .curriculum-content__delivery {
+    text-align: center;
+    height: 124px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+  }
+  .curriculum-content__delivery tr {
+    display: block;
+    margin-bottom: 5px;
+  }
+  .curriculum-content__button {
+    margin-left: 30px;
+  }
+
+  /* 選択中の学年アイコン */
+  .main-content--header__select-grade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 50px;
+    border-radius: 15px;
+    border-width: 2px;
+    background-color: rgb(156, 212, 221);
+    color: white;
+    font-weight: normal;
+  }
+
+  /* 画面遷移ボタン（新規登録・授業編集・配信日時設定） */
+  .list-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    border-radius: 5px;
+    border-width: 1px;
+    background-color: rgb(66, 135, 147);
+    color: white;
+  }
+  #buttonCreate {
+    width: 120px;
+    height: 40px;
+  }
+  .content-button {
+    width: 100px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  /* 学年選択ボタン */
+  .grade-select--button {
+    display: block;
+    width: 135px;
+    height: 30px;
+    border-radius: 60px;
+    border-width: 1px;
+    background-color: rgb(156, 212, 221);
+    color: white;
+  }
+  .jr-high-school {
+    background-color: rgb(156, 221, 193) !important;
+  }
+  .high-school {
+    background-color: rgb(157, 221, 156) !important;
+  }
+
+
+/* 【授業登録・編集画面】 */
+
+  /* レイアウト */
+  .form--item {
+    width: 1180px;
+    margin: auto;
+  }
+  #registerCurriculumForm ul {
+    height: 350px;
+    margin-top: 50px;
+  }
+  #updateCurriculumForm ul {
+    height: 300px;
+  }
+  .img-row {
+    display: flex;
+  }
+  .img--edit {
+    /* サムネイル画像表示サイズ（編集画面） */
+    max-width: 300px;
+    max-height: 300px;
+  }
+  #imgEditThumbnail {
+    margin: 0 20px;
+  }
+  #fileEditThumbnail label, #fileEditThumbnail input {
+    display: block;
+  }
+  .form--item__list {
+    width: 600px;
+    height: 40px;
+    margin: auto;
+  }
+  .form--item__list label {
+    display: inline-block;
+    width: 150px;
+  }
+  .form--item__list input, .form--item__list select {
+    display: inline-block;
+    width: 400px;
+    height: 25px;
+  }
+  .description-row {
+    height: 110px;
+  }
+  .description-row input {
+    height: 90px;
+    vertical-align: top;
+  }
+  .description-row label {
+    vertical-align: top;
+  }
+  .flg-row {
+    display: flex;
+    padding-left: 150px;
+  }
+  .flg-row--check-box input {
+    width: 100%;
+  }
+  .flg-row--check-box {
+    width: 40px;
+  }
+
+  /* 授業登録・設定更新ボタン */
+  .form--button {
+    text-align: center;
+    width: auto;
+  }
+  .form--button__tag {
+    color: aliceblue;
+    width: 160px;
+    height: 27px;
+  }  
+  .form--button__curriculum {
+    background-color: rgb(94, 140, 141);
+  }
+
+
+/* 【配信日時設定画面】 */
+
+  /* レイアウト */
+  .main-content--header__curriculum-title {
+    margin-left: 50px;
+  }
+  .form--item__delivery {
+    margin-top: 50px;
+    width: 70%;
+    overflow: auto;
+  }
+  .form--item__column {
+    float: left;
+  }
+  .delivery--row__form, .delivery--row__delete, .add--row__form, .add--row__delete {
+    display: block;
+    height: 30px;
+    margin-bottom: 20px;
+  }
+  .delivery--row__form input, .add--row__form input {
+    display: inline-block;
+    width: 150px;
+    height: 25px;
+    margin-right: 15px;
+    text-align: center;
+  }
+  .delivery__wave-dash {
+    padding-right: 15px;
+  }
+
+  /* 行追加・行削除ボタン */
+  .circle-button {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border-width: 1px;
+    font-size: 18px;
+    font-weight: bolder;
+    color: white;
+  }
+  .delivery--button__add-record {
+    /* 行追加 */
+    background-color: rgb(0, 195, 0);
+  }
+  .delivery--button__delete, .add--button__delete {
+    /* 行削除 */
+    background-color: red;
+  }
+
+  /* 配信日時登録ボタン */
+  .form--button__delivery {
+    background-color: rgb(115, 115, 115);
+  }

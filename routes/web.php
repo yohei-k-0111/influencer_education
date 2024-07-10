@@ -19,20 +19,19 @@ use App\Http\Controllers\Admin\DeliveryController;
 Route::get('/', function () {
     return view('welcome');
 });
+// 仮トップ画面route
 Route::get('/admin/top', function () {
     return view('admin/top');
 });
 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 // 管理機能（admin）グループ化（パス・namespace・ルート名）
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // 授業一覧画面表示
     Route::get('/curriculum_list', [CurriculumController::class, 'showCurriculumList'])->name('show.curriculum.list');
     // 授業新規登録画面表示
-    Route::get('/curriculum_create', [CurriculumController::class, 'showCurriculumCreate'])->name('show.curriculum.create');
+    Route::get('/curriculum_create/{id}', [CurriculumController::class, 'showCurriculumCreate'])->name('show.curriculum.create');
     // 授業新規登録
     Route::post('/curriculum_store', [CurriculumController::class, 'showCurriculumStore'])->name('show.curriculum.store');
     // 授業設定画面表示

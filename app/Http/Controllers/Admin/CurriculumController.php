@@ -25,23 +25,29 @@ class CurriculumController extends Controller
         $grades = DB::table('grades')->get();
         // 選択した学年名を取得
         $select_grade_id = $request->input('grade_id', 1);
-        $select_grade_name = $grades->where('id', $select_grade_id)->value('name');
-        // dd($select_grade_id);
-        // ①授業一覧画面を表示し②取得したcurriculums(deliveryTimes含む)とgrades、select_grade_nameの情報を渡す
-        return view('admin.curriculum_list', compact('curriculums', 'grades', 'select_grade_name'));
+        $select_grade = $grades->where('id', $select_grade_id)->first();
+        // フラッシュメッセージのセッションを削除する ※Ajax通信時のみ
+        if($request->ajax()) {
+            $sessions = ['store_curriculum_message', 'update_curriculum_message', 'upsert_delivery_message'];
+            $request->session()->forget($sessions);
+        }
+        // ①授業一覧画面を表示し②取得したcurriculums(deliveryTimes含む)とgrades、select_gradeの情報を渡す
+        return view('admin.curriculum_list', compact('curriculums', 'grades', 'select_grade'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     // 授業新規作成画面表示メソッド
-    public function showCurriculumCreate() {
+    public function showCurriculumCreate($id) {
         // gradesテーブルの全てのレコード情報を取得
         $grades = DB::table('grades')->get();
-        // ①新規登録画面を表示し②取得したgradesの情報を渡す。
-        return view('admin.curriculum_create', compact('grades'));
+        $select_grade_id = $id;
+        // ①新規登録画面を表示し②取得したgrades、grade_idの情報を渡す。
+        return view('admin.curriculum_create', compact('grades', 'select_grade_id'));
     }
 
     /**
@@ -53,16 +59,16 @@ class CurriculumController extends Controller
     // 授業新規登録メソッド
     public function showCurriculumStore(CurriculumRequest $request) {
         // トランザクション開始
-        // DB::beginTransaction();
-        // try {
+        DB::beginTransaction();
+        try {
             // CurriculumモデルのgetCurriculumStoreメソッドを実行する（登録処理）
             $curriculum_store = new Curriculum();
             $curriculum_store->getCurriculumStore($request);
-        //     DB::commit();
-        // } catch (\Exception $e) {
-        //     DB::rollback();
-        //     return back();
-        // }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back();
+        }
         // リクエストから選択中の学年idを取得
         $grade_id = $request->grade_id;
         // ①授業一覧画面にリダイレクトし②取得した学年idを渡す③フラッシュメッセージをセッション
@@ -106,16 +112,16 @@ class CurriculumController extends Controller
     // 授業内容更新メソッド
     public function showCurriculumUpdate(CurriculumRequest $request, $id) {
         // トランザクション開始
-        // DB::beginTransaction();
-        // try {
+        DB::beginTransaction();
+        try {
             // CurriculumモデルのgetCurriculumUpdateメソッドを実行する（更新処理）
             $curriculum_update = new Curriculum();
             $curriculum_update->getCurriculumUpdate($request, $id);
-        //     DB::commit();
-        // } catch (\Exception $e) {
-        //     DB::rollback();
-        //     return back();
-        // }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back();
+        }
         // リクエストから選択中の学年idを取得
         $grade_id = $request->grade_id;
         // ①授業一覧画面にリダイレクトし②取得した学年idを渡す③フラッシュメッセージをセッション

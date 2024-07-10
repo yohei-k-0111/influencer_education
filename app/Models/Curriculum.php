@@ -50,8 +50,6 @@ class Curriculum extends Model
 
     // 登録フォームから送信された情報をcurriculumsテーブルに保存
     public function getCurriculumStore($request) {
-        // デバッグのためにリクエストの内容を確認
-        // dd($request);
         //curriculumsテーブルに新しいレコードを作成
         $curriculum = new Curriculum;
         // 送信情報を格納
@@ -67,8 +65,6 @@ class Curriculum extends Model
             $file_path = $request->file('thumbnail')->storeAs('images/thumbnail', $filename, 'public');
             $curriculum->thumbnail = 'storage/'. $file_path; // 取得したファイル名を含むパスをDBに格納
         }
-        // dd($curriculum->thumbnail);
-        // 保存
         $curriculum->save();
     }
 
@@ -89,8 +85,6 @@ class Curriculum extends Model
             $file_path = $request->file('thumbnail')->storeAs('images/thumbnail', $filename, 'public');
             $curriculum->thumbnail = 'storage/'. $file_path; // 取得したファイル名を含むパスをDBに格納
         }
-        // dd($curriculum->thumbnail);
-        // 更新保存
         $curriculum->save();
     }
 }

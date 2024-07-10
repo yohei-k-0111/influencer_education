@@ -9,14 +9,18 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <!-- <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> -->
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
 </head>
 <body>
     <div id="app">
@@ -31,7 +35,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+                    <ul id="testStyle" class="navbar-nav me-auto">
                         <li class="nav-item">{{ "【仮ヘッダー】" }}</li>
 
                         <li class="nav-item">

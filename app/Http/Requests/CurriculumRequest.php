@@ -22,7 +22,6 @@ class CurriculumRequest extends FormRequest
      * @return array<string, mixed>
      */
      public function rules() {
-        // dd('Rules method called');
         // 授業新規登録・授業更新フォームのバリデーションロジックを定義
         return [
             'title' => 'required | max:255',
