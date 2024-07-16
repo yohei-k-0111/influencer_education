@@ -28,7 +28,7 @@ class CurriculumsController extends Controller
     
         $curriculums = $curriculumsInProgress->merge($curriculumsForCurrentMonth);
     
-        return view('stream', compact('curriculums'));
+        return view('user_stream', compact('curriculums'));
     }
     
     public function show($id)
