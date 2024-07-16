@@ -7,7 +7,7 @@
 <script>
     const YOUR_USER_ID = {{ auth()->user()->id }};
     const CLEAR_ROUTE_URL = "{{ route('clear') }}";
-    const YOUR_CURRICULUM_ID = @json($curriculums->first()->id ?? null);
+    const YOUR_CURRICULUM_ID = @json($curriculums->isEmpty() ? null : $curriculums->first()->id);
 </script>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -49,7 +49,7 @@
     <form id="clearForm" action="{{ route('clear') }}" method="POST">
         @csrf
         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-        <input type="hidden" name="curriculum_id" value="{{ $curriculums->first()->id ?? '' }}">
+        <input type="hidden" name="curriculum_id" value="{{ !$curriculums->isEmpty() ? $curriculums->first()->id : '' }}">
         <button type="submit" class="clear">受講しました</button>
     </form>
 @endif

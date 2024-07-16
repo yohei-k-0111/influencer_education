@@ -12,8 +12,6 @@
     </div>
 @endforeach
 
-
-
     <div id="dots">
         @for ($i = 1; $i <= 3; $i++)
             <span class="dot {{$i == 1? 'active' : ''}}" onclick="changeImage({{$i}})"></span>
@@ -27,15 +25,16 @@
 <div class="container">
     <h1>お知らせ</h1>
     <div class="notice-list">
-    @if(isset($data))
-    @foreach ($data as $item)
-        <div class="card mb-3">
-            <div class="card-body">
-                <p>{{ $article->article_contents, 0, 100 }}</p>
-                <a href="{{ route('articles.show', $article->id) }}" class="btn btn-primary"></a>
+    @if(isset($articles))
+        @foreach ($articles as $article)
+            <div class="card mb-3">
+                <a href="{{ route('articles.show', $article->id) }}" class="card-link">
+                    <div class="card-body">
+                        <p>{{ Str::limit($article->article_contents, 100) }}</p>
+                    </div>
+                </a>
             </div>
-        </div>
-    @endforeach
+        @endforeach
     @endif
 </div>
 

@@ -35,7 +35,8 @@ Route::prefix('admin')->group(function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/top', [App\Http\Controllers\ArticlesController::class, 'top'])->name('top')->middleware('auth');
 Route::get('/articles/news', [ArticlesController::class, 'top']);
-Route::get('/stream', [App\Http\Controllers\CurriculumsController::class, 'user_stream'])->name('stream')->middleware('auth');
+Route::get('/curriculums/user_stream/{id}', [CurriculumsController::class, 'user_stream'])->name('user_stream');
+Route::post('/clear', [CurriculumsController::class, 'clear'])->name('clear');
 
 // 時間割ページへのルート仮
 Route::get('/jikan-bu', function () {
@@ -46,8 +47,6 @@ Route::get('/jikan-bu', function () {
 Route::get('/lessons', function () {
     return view('lessons');
 })->name('lessons');
-
-Route::post('/clear', [CurriculumsController::class, 'clear'])->name('clear');
 
 // プロフィール設定ページへのルート仮
 Route::get('/profile-setting', function () {
