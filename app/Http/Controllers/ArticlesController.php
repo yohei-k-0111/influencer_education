@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Banner;
@@ -11,19 +10,30 @@ class ArticlesController extends Controller
 {
     public function top(Request $request)
     {
-        $articles = Article::orderBy('article_contents', 'desc')->first();
-        $banners = Banner::all();
-        \Log::info('Articles:', ['articles' => $articles]);
-        \Log::info('Banners:', ['banners' => $banners]); // toArray() を削除してログ出力
+        // デフォルトのソート条件を設定
+        $sortColumn = $request->input('sort', 'created_at');
+        $sortOrder = $request->input('direction', 'desc');
+
+        // ページネーションを使用して記事を取得
+        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
         
-    
+        //画像表示
+        $banners = Banner::all();
+        
+        // AJAXリクエストの場合は部分ビューを返す
+        if ($request->ajax()) {
+            return view('article.show', compact('articles'))->render();
+        }
+
         return view('top', compact('banners', 'articles'));
     }
 
-    public function sorted(Request $request)
+    public function show($id)
     {
-        $articles = Article::ovderBy('created_at', 'desc')->get();
+        // IDに基づいて記事を取得
+        $articles = Article::findOrFail($id);
 
-        return response()->json($articles);
+        // 記事をビューに渡して表示
+        return view('articles.show', compact('articles'));
     }
 }

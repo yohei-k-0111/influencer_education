@@ -10,26 +10,27 @@ use Illuminate\Support\Facades\Log;
 
 class CurriculumsController extends Controller
 {
-    public function user_stream(Request $request)
+    public function user_stream(Request $request, $id)
     {
-        $userId = $request->input('users_id');
-        
+        $userId = auth()->user()->id;
+
         $progressIds = CurriculumProgress::where('users_id', $userId)->pluck('curriculums_id');
     
         $curriculumsInProgress = Curriculum::whereIn('id', $progressIds)
-            ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg')
+            ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg', 'description')
             ->get();
     
         $curriculumsForCurrentMonth = Curriculum::where('always_delivery_flg', 1)
-            ->whereMonth('created_at', now()->month)
-            ->whereYear('created_at', now()->year)
-            ->whereDay('created_at', '>=', 1)
+            ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg', 'description')
             ->get();
     
         $curriculums = $curriculumsInProgress->merge($curriculumsForCurrentMonth);
     
-        return view('user_stream', compact('curriculums'));
-    }
+        // パラメーターから渡されたid情報でカリキュラムを絞り込み
+        $filteredCurriculum = $curriculums->where('id', $id)->first();
+    
+        return view('user_stream', compact('filteredCurriculum'));
+    }    
     
     public function show($id)
     {
@@ -39,7 +40,7 @@ class CurriculumsController extends Controller
         $curriculums = Curriculum::find($id);
     
         $progress = CurriculumProgress::where('curriculums_id', $id)
-            ->where('users_id', 1)
+            ->where('users_id', auth()->user()->id) 
             ->value('clear_flg');
     
         return view('delivery', compact('curriculums', 'progress'));
@@ -48,7 +49,7 @@ class CurriculumsController extends Controller
     public function clear(Request $request)
     {
         \Log::info('Clear method called', ['user_id' => $request->user_id]);
-        $userId = $request->input('user_id');
+        $userId = auth()->user()->id;
         $curriculumId = $request->input('curriculum_id');
 
         $request->validate([

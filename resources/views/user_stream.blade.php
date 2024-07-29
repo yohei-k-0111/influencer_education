@@ -7,24 +7,20 @@
 <script>
     const YOUR_USER_ID = {{ auth()->user()->id }};
     const CLEAR_ROUTE_URL = "{{ route('clear') }}";
-    const YOUR_CURRICULUM_ID = @json($curriculums->isEmpty() ? null : $curriculums->first()->id);
+    const YOUR_CURRICULUM_ID = @json($filteredCurriculum->id ?? null);
 </script>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@if($curriculums->isEmpty())
+@if(!$filteredCurriculum)
     <div class="return"><a href="{{ route('top') }}">←戻る</a></div>
     <button class="delete">受講しました</button>    
     <img src="{{ asset('img/test.jpeg') }}" alt="サムネイル">
-    @foreach($curriculums as $curriculum)
-    <h1>{{ $curriculum->title }}</h1>
-    @endforeach
+    <h1>カリキュラムが見つかりません</h1>
 @else
-    @foreach($curriculums as $curriculum)
-        <h1>{{ $curriculum->title }}</h1><!-- タイトル名 -->
-        <h2>{{ $curriculum->description }}</h2>
-        <div class="grade">{{ $curriculum->grade_id }}</div><!-- 学年ID表示 -->
-    @endforeach
+    <h1>{{ $filteredCurriculum->title }}</h1><!-- タイトル名 -->
+    <h2>{{ $filteredCurriculum->description }}</h2>
+    <div class="grade">{{ $filteredCurriculum->grade_id }}</div><!-- 学年ID表示 -->
 
     <h3>講座内容</h3>
     <div class="return">
@@ -32,24 +28,21 @@
     </div>
 
     <div class="video-container"> <!-- 期間を設けて動画を表示 -->
-        @foreach ($curriculums as $curriculum)
-            @if($curriculum->always_delivery_flg == 1)
-                @php
-                    $videoId = '';
-                    if (preg_match('/v=([^&]+)/', $curriculum->video_url, $matches)) {
-                        $videoId = $matches[1];
-                    }
-                @endphp
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $videoId }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            @else         
-            @endif
-        @endforeach
+        @if($filteredCurriculum->always_delivery_flg == 1)
+            @php
+                $videoId = '';
+                if (preg_match('/v=([^&]+)/', $filteredCurriculum->video_url, $matches)) {
+                    $videoId = $matches[1];
+                }
+            @endphp
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $videoId }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        @endif
     </div>
 
     <form id="clearForm" action="{{ route('clear') }}" method="POST">
         @csrf
         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-        <input type="hidden" name="curriculum_id" value="{{ !$curriculums->isEmpty() ? $curriculums->first()->id : '' }}">
+        <input type="hidden" name="curriculum_id" value="{{ $filteredCurriculum->id }}">
         <button type="submit" class="clear">受講しました</button>
     </form>
 @endif

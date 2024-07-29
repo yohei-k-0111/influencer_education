@@ -60,3 +60,18 @@ img {
 .container h1{
     margin-top: 400px;
 }
+
+.news-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.news-item {
+    padding: 10px 0;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}

@@ -34,7 +34,6 @@ Route::prefix('admin')->group(function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/top', [App\Http\Controllers\ArticlesController::class, 'top'])->name('top')->middleware('auth');
-Route::get('/articles/news', [ArticlesController::class, 'top']);
 Route::get('/curriculums/user_stream/{id}', [CurriculumsController::class, 'user_stream'])->name('user_stream');
 Route::post('/clear', [CurriculumsController::class, 'clear'])->name('clear');
 
@@ -52,3 +51,7 @@ Route::get('/lessons', function () {
 Route::get('/profile-setting', function () {
     return view('profile-setting');
 })->name('profile-setting');
+
+//お知らせページのルート仮
+Route::get('/articles/{id}', [ArticlesController::class, 'show'])->name('articles.show');
+

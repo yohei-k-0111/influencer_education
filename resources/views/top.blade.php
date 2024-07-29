@@ -6,15 +6,15 @@
 <link href="{{ asset('css/user_top.css') }}" rel="stylesheet">
 
 <div id="header-container">
-@foreach ($banners as $banner)
-    <div class="banner">
-        <img src="{{ asset('img/' . $banner->image) }}" alt="Banner Image">
-    </div>
-@endforeach
+    @foreach ($banners as $banner)
+        <div class="banner">
+            <img src="{{ asset('img/' . $banner->image) }}" alt="Banner Image">
+        </div>
+    @endforeach
 
     <div id="dots">
         @for ($i = 1; $i <= 3; $i++)
-            <span class="dot {{$i == 1? 'active' : ''}}" onclick="changeImage({{$i}})"></span>
+            <span class="dot {{$i == 1 ? 'active' : ''}}" onclick="changeImage({{$i}})"></span>
         @endfor
     </div>
 
@@ -25,17 +25,19 @@
 <div class="container">
     <h1>お知らせ</h1>
     <div class="notice-list">
-    @if(isset($articles))
-        @foreach ($articles as $article)
-            <div class="card mb-3">
-                <a href="{{ route('articles.show', $article->id) }}" class="card-link">
-                    <div class="card-body">
-                        <p>{{ Str::limit($article->article_contents, 100) }}</p>
+        @if(isset($articles))
+            <div class="news-box">
+                @foreach ($articles as $article)
+                    <div class="news-item">
+                        <a href="{{ route('articles.show', $article->id) }}" class="card-link">
+                            <p>{{ Str::limit($article->article_contents, 100) }}</p>
+                        </a>
                     </div>
-                </a>
+                @endforeach
             </div>
-        @endforeach
-    @endif
+        @endif
+    </div>
 </div>
+{{ $articles->links('pagination::bootstrap-4') }}
 
 @endsection
