@@ -34,7 +34,7 @@ Route::prefix('admin')->group(function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/top', [App\Http\Controllers\ArticlesController::class, 'top'])->name('top')->middleware('auth');
-Route::get('/curriculums/user_stream/{id}', [CurriculumsController::class, 'user_stream'])->name('user_stream');
+Route::get('/curriculums/user_stream/{id}', [CurriculumsController::class, 'user_stream'])->name('user_stream')->middleware('auth');
 Route::post('/clear', [CurriculumsController::class, 'clear'])->name('clear');
 
 // 時間割ページへのルート仮

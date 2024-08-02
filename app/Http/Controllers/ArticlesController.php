@@ -27,7 +27,8 @@ class ArticlesController extends Controller
 
         return view('top', compact('banners', 'articles'));
     }
-
+    
+    //仮ページ
     public function show($id)
     {
         // IDに基づいて記事を取得
