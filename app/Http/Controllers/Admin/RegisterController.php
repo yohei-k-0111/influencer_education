@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin;  //修正
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;  //追記
-use App\Models\User;
+use App\Providers\RouteServiceProvider;  //追加  
+use App\Models\Admin;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;            //追記
 
 class RegisterController extends Controller
 {
@@ -29,8 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/home';
-    protected $redirectTo = '/user/top';
+    protected $redirectTo = '/admin/home';     //修正
 
     /**
      * Create a new controller instance.
@@ -39,8 +39,14 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:admin');    //修正
     }
+
+    protected function guard()                  //追記
+    {                                           //追記
+        return Auth::guard('admin');            //追記
+    }                                           //追記
+
 
     /**
      * Get a validator for an incoming registration request.
@@ -66,13 +72,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // \Log::info($data);
-        return User::create([
+        return Admin::create([                 //修正
             'name' => $data['name'],
             'name_kana' => $data['name_kana'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'grade_id' => $data['grade_id'] ?? 1,
         ]);
     }
 }
