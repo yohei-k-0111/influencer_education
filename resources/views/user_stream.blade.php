@@ -37,7 +37,7 @@
         <a href="{{ route('top') }}">←戻る</a>
     </div>
 
-    <div class="video-container">
+    <div class="media-container">
         @if($isWithinDeliveryPeriod)
             @php
                 $videoId = '';
