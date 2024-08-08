@@ -12,12 +12,22 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@if(!$filteredCurriculum)
-    <div class="return"><a href="{{ route('top') }}">←戻る</a></div>
-    <button class="delete">受講しました</button>    
-    <img src="{{ asset('img/test.jpeg') }}" alt="サムネイル">
-    <h1>カリキュラムが見つかりません</h1>
+@if($filteredCurriculum)
+    <!-- カリキュラムの内容表示 -->
+    @if($filteredCurriculum->deliveryTimes->isNotEmpty())
+        <form id="clearForm" action="{{ route('clear') }}" method="POST">
+            @csrf
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            <input type="hidden" name="curriculum_id" value="{{ $filteredCurriculum->id }}">
+            <button type="submit" class="clear">受講しました</button>
+        </form>
+    @else
+        <p>このカリキュラムは現在受講できません。</p>
+    @endif
 @else
+    <p>カリキュラムが見つかりません。</p>
+@endif
+
     <h1>{{ $filteredCurriculum->title }}</h1><!-- タイトル名 -->
     <h2>{{ $filteredCurriculum->description }}</h2>
     <div class="grade">{{ $filteredCurriculum->grade_id }}</div><!-- 学年ID表示 -->
@@ -27,15 +37,17 @@
         <a href="{{ route('top') }}">←戻る</a>
     </div>
 
-    <div class="video-container"> <!-- 期間を設けて動画を表示 -->
-        @if($filteredCurriculum->always_delivery_flg == 1)
+    <div class="video-container">
+        @if($isWithinDeliveryPeriod)
             @php
                 $videoId = '';
                 if (preg_match('/v=([^&]+)/', $filteredCurriculum->video_url, $matches)) {
                     $videoId = $matches[1];
                 }
             @endphp
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $videoId }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $videoId }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        @else
+            <img src="{{ asset('img/' . $filteredCurriculum->thumbnail) }}" alt="サムネイル" class="thumbnail">
         @endif
     </div>
 
@@ -44,6 +56,5 @@
         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
         <input type="hidden" name="curriculum_id" value="{{ $filteredCurriculum->id }}">
         <button type="submit" class="clear">受講しました</button>
-    </form>
-@endif
+    </form>  
 @endsection

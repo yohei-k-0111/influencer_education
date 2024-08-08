@@ -13,9 +13,11 @@ class ArticlesController extends Controller
         // デフォルトのソート条件を設定
         $sortColumn = $request->input('sort', 'created_at');
         $sortOrder = $request->input('direction', 'desc');
-
+    
         // ページネーションを使用して記事を取得
-        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
+        $articles = Article::orderBy($sortColumn, $sortOrder)
+            ->select('id', 'article_contents', 'created_at', 'posted_date') // ここでposted_dateを取得
+            ->paginate(10);
         
         //画像表示
         $banners = Banner::all();
@@ -24,9 +26,9 @@ class ArticlesController extends Controller
         if ($request->ajax()) {
             return view('article.show', compact('articles'))->render();
         }
-
+    
         return view('top', compact('banners', 'articles'));
-    }
+    }    
     
     //仮ページ
     public function show($id)

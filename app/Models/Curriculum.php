@@ -18,6 +18,11 @@ class Curriculum extends Model
         'grade_id'
     ];
 
+    public function deliveryTimes()
+    {
+        return $this->hasMany(DeliveryTime::class, 'curriculums_id');
+    }
+
     protected $table = 'curriculums';
 
     public $timestamps = true;

@@ -30,6 +30,13 @@
                 @foreach ($articles as $article)
                     <div class="news-item">
                         <a href="{{ route('articles.show', $article->id) }}" class="card-link">
+                        <p>
+                            {{ 
+                                $article->posted_date 
+                                ? \Carbon\Carbon::parse($article->posted_date)->format('Y-m-d') 
+                                : '' 
+                            }}
+                        </p>
                             <p>{{ Str::limit($article->article_contents, 100) }}</p>
                         </a>
                     </div>
@@ -38,6 +45,7 @@
         @endif
     </div>
 </div>
+
 {{ $articles->links('pagination::bootstrap-4') }}
 
 @endsection
