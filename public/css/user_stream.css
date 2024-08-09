@@ -34,7 +34,6 @@ img {
 }
 
 .clear{
-    position: absolute;
     font-weight: bold;
     border: none;
     border-radius: 10%;
@@ -42,8 +41,7 @@ img {
     color: white;
     background-color: orange;
     text-decoration: none;
-    left: 75%;
-    top: 40%;
+    margin-left: 80%;
 }
 
 .delete{
@@ -59,10 +57,12 @@ img {
     top: 40%;
 }
 
-.media-container{
+.video-container{
     position: absolute;
     left: 10%;
 }
+
+
 
 .grade{
     position:absolute;
