@@ -12,22 +12,6 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@if($filteredCurriculum)
-    <!-- カリキュラムの内容表示 -->
-    @if($filteredCurriculum->deliveryTimes->isNotEmpty())
-        <form id="clearForm" action="{{ route('clear') }}" method="POST">
-            @csrf
-            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-            <input type="hidden" name="curriculum_id" value="{{ $filteredCurriculum->id }}">
-            <button type="submit" class="clear">受講しました</button>
-        </form>
-    @else
-        <p>このカリキュラムは現在受講できません。</p>
-    @endif
-@else
-    <p>カリキュラムが見つかりません。</p>
-@endif
-
     <h1>{{ $filteredCurriculum->title }}</h1><!-- タイトル名 -->
     <h2>{{ $filteredCurriculum->description }}</h2>
     <div class="grade">{{ $filteredCurriculum->grade_id }}</div><!-- 学年ID表示 -->
@@ -37,7 +21,7 @@
         <a href="{{ route('top') }}">←戻る</a>
     </div>
 
-    <div class="media-container">
+    <div class="video-container">
         @if($isWithinDeliveryPeriod)
             @php
                 $videoId = '';
