@@ -21,7 +21,7 @@
         <a href="{{ route('top') }}">←戻る</a>
     </div>
 
-    <div>
+    <div class="media-container">
         @if($isWithinDeliveryPeriod)
             @php
                 $videoId = '';
@@ -29,7 +29,7 @@
                     $videoId = $matches[1];
                 }
             @endphp
-            <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $videoId }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $videoId }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         @else
             <img src="{{ asset('img/' . $filteredCurriculum->thumbnail) }}" alt="サムネイル" class="thumbnail">
         @endif

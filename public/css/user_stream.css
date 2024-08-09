@@ -16,14 +16,6 @@ h3{
     left: 10%;
 }
 
-img {
-    position: absolute;
-    top: 40%;
-    left: 40%;
-    transform: translate(-50%, -50%);
-    width: 255px 0px;
-    height: 20% ;
-}
 .return{
     font-weight: bold;
     border: none;
@@ -34,6 +26,7 @@ img {
 }
 
 .clear{
+    position: absolute;
     font-weight: bold;
     border: none;
     border-radius: 10%;
@@ -41,7 +34,8 @@ img {
     color: white;
     background-color: orange;
     text-decoration: none;
-    margin-left: 80%;
+    left: 75%;
+    top: 40%;
 }
 
 .delete{
@@ -57,9 +51,21 @@ img {
     top: 40%;
 }
 
-.video-container{
+
+
+.media-container iframe {
     position: absolute;
+    top: 20%;
     left: 10%;
+}
+
+.media-container .thumbnail {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    width: 255px 0px;
+    height: 20% ;
 }
 
 
