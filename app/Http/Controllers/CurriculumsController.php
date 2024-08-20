@@ -14,33 +14,35 @@ class CurriculumsController extends Controller
     public function user_stream(Request $request, $id)
     {
         $userId = auth()->user()->id;
-    
+
+        // 進行中のカリキュラムを取得
         $progressIds = CurriculumProgress::where('users_id', $userId)->pluck('curriculums_id');
-    
+
         $curriculumsInProgress = Curriculum::whereIn('id', $progressIds)
             ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg', 'description')
             ->get();
-    
+
+        // 常時公開のカリキュラムを取得
         $curriculumsForCurrentMonth = Curriculum::where('always_delivery_flg', 1)
             ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg', 'description')
             ->get();
-    
+
         $curriculums = $curriculumsInProgress->merge($curriculumsForCurrentMonth);
-    
+
         $filteredCurriculum = $curriculums->where('id', $id)->first();
-    
+
         // 公開期間をチェック
         $deliveryTime = DeliveryTime::where('curriculums_id', $id)
             ->where('delivery_from', '<=', now())
             ->where('delivery_to', '>=', now())
             ->first();
-    
-        // ビューに公開期間のチェック結果を渡す
+
+        // 常時公開フラグと公開期間の条件で、$canAttend を設定
         $isWithinDeliveryPeriod = $deliveryTime ? true : false;
+        $canAttend = ($filteredCurriculum->always_delivery_flg == 1) || $isWithinDeliveryPeriod;
     
-        return view('user_stream', compact('filteredCurriculum', 'isWithinDeliveryPeriod'));
+        return view('user_stream', compact('filteredCurriculum', 'isWithinDeliveryPeriod', 'canAttend'));
     }
-     
       
     public function show($id)
     {

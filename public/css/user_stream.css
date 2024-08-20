@@ -38,6 +38,19 @@ h3{
     top: 40%;
 }
 
+.no-clear{
+    position: absolute;
+    font-weight: bold;
+    border: none;
+    border-radius: 10%;
+    font-size: 30px;
+    color: white;
+    background-color: rgba(105, 103, 98, 0.274);
+    text-decoration: none;
+    left: 75%;
+    top: 40%;
+}
+
 .delete{
     position: absolute;
     font-weight: bold;
@@ -50,8 +63,6 @@ h3{
     left: 75%;
     top: 40%;
 }
-
-
 
 .media-container iframe {
     position: absolute;
@@ -67,8 +78,6 @@ h3{
     width: 255px 0px;
     height: 20% ;
 }
-
-
 
 .grade{
     position:absolute;

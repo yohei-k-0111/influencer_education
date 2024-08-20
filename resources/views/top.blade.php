@@ -6,21 +6,27 @@
 <link href="{{ asset('css/user_top.css') }}" rel="stylesheet">
 
 <div id="header-container">
-    @foreach ($banners as $banner)
-        <div class="banner">
-            <img src="{{ asset('img/' . $banner->image) }}" alt="Banner Image">
+    @if($banners->count() > 0)
+        @foreach ($banners as $index => $banner)
+            <div class="banner {{ $index === 0 ? 'active' : '' }}" id="banner-{{ $index }}">
+                <img src="{{ asset('img/' . $banner->image) }}" alt="Banner Image">
+            </div>
+        @endforeach
+
+        <div id="dots">
+            @foreach ($banners as $index => $banner)
+                <span class="dot {{ $index === 0 ? 'active' : '' }}" onclick="changeImage({{ $index }})"></span>
+            @endforeach
         </div>
-    @endforeach
 
-    <div id="dots">
-        @for ($i = 1; $i <= 3; $i++)
-            <span class="dot {{$i == 1 ? 'active' : ''}}" onclick="changeImage({{$i}})"></span>
-        @endfor
-    </div>
-
-    <button class="btn-1" id="btn1">●</button>
-    <button class="btn-2" id="btn2">●</button>
+        <div id="buttons-container">
+            @for ($i = 0; $i < 3; $i++)
+                <button class="btn-{{ $i + 1 }}" id="btn{{ $i + 1 }}">●</button>
+            @endfor
+        </div>
+    @endif
 </div>
+
 
 <div class="container">
     <h1>お知らせ</h1>

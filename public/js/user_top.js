@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('btn1').addEventListener('click', function() {
         changeImage(2); // 2番目の画像に切り替える
     });
+
+    document.getElementById('btn3').addEventListener('click', function() {
+        changeImage(3); // 3番目の画像に切り替える
+    });
 });
 
 function changeImage(imageIndex) {
