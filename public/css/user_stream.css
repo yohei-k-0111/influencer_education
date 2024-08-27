@@ -38,14 +38,14 @@ h3{
     top: 40%;
 }
 
-.no-clear{
+.cleardone{
     position: absolute;
     font-weight: bold;
     border: none;
     border-radius: 10%;
     font-size: 30px;
     color: white;
-    background-color: rgba(105, 103, 98, 0.274);
+    background-color: gray;
     text-decoration: none;
     left: 75%;
     top: 40%;

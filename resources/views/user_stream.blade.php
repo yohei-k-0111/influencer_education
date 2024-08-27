@@ -35,15 +35,19 @@
     @endif
 </div>
 
-@if($isWithinDeliveryPeriod && $canAttend) <!-- 期間内かつ受講可能ならボタンを表示 -->
-    <form id="clearForm" action="{{ route('clear') }}" method="POST">
-        @csrf
-        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-        <input type="hidden" name="curriculum_id" value="{{ $filteredCurriculum->id }}">
-        <button type="submit" class="clear">受講しました</button>
-    </form>
+@if($canAttend)
+    @if($isCompleted)
+        <button class="cleardone" disabled>受講する</button>
+    @else
+        <form id="clearForm" action="{{ route('clear') }}" method="POST">
+            @csrf
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            <input type="hidden" name="curriculum_id" value="{{ $filteredCurriculum->id }}">
+            <button type="submit" class="clear">受講する</button>
+        </form>
+    @endif
 @else
-    <button type="button" class="no-clear" disabled>受講しました</button>
+    <button class="no-clear" disabled>受講する</button>
 @endif
 
 @endsection
