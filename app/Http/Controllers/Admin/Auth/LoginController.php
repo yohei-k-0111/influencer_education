@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;  //追加
+use App\Models\Admin;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;                        //追記
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -30,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/home';      //修正
+    protected $redirectTo = '/admin/top';      //修正
 
     /**
      * Create a new controller instance.
@@ -53,5 +55,10 @@ class LoginController extends Controller
     {                                                       //追記
         $this->performLogout($request);                     //追記
         return redirect('admin/login');                     //追記
+    }
+
+    public function showRegisterForm() // 追加
+    {
+        return view('admin.auth.login'); // 管理者用のログインビューを指定
     }
 }

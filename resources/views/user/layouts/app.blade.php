@@ -4,10 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <!-- <link href="{{ asset('css/style.css') }}" rel="stylesheet"> -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+        <link href="{{ asset('css/common.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/user.css') }}" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="{{ asset('/js/main.js') }}"></script>
@@ -24,31 +25,25 @@
     </head>
     <body>
         <!-- <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0"> -->
-        <header>
-            <div>
-                <!-- <button type="button" id="timetable">時間割</button>    
-                <button type="button" id="progress">授業進捗</button>    
-                <button type="button" id="profileForm">プロフィール設定</button>     -->
-                <a class="btn" href="#">時間割</a>
-                <a class="btn" href="{{ route('user.show.progress') }}">授業進捗</a>
-                <a class="btn" href="{{ route('user.show.profile') }}">プロフィール設定</a>
+        <header class="nav-links">
+            <div class="left-links">
+                <a class="btn btn-success custom-padding" href="#">時間割</a>
+                <a class="btn btn-success custom-padding" href="{{ route('user.show.progress') }}">授業進捗</a>
+                <a class="btn btn-success custom-padding" href="{{ route('user.show.profile') }}">プロフィール設定</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
-            <a href="#">ログアウト</button>    
+            <div class="right-links">
+            <!-- item04は削除可能か？ -->
+                <a  class="item04" href="#" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                ログアウト
+                </a>    
+            </div>
         </header>
-            <!-- @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/user.top') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif -->
-
+        <main>
             @yield('content')
+        </main>
     </body>
 </html>

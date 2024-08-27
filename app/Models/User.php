@@ -6,9 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;//追記
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -48,19 +50,19 @@ class User extends Authenticatable
     ];
 
     // grade（親）とのリレーション
-    public function grade()
+    public function grade(): BelongsTo
     {
         return $this->belongsTo(Grade::class);
     }
     // curriculum_progresses（子）とのリレーション
-    public function curriculumProgresses()
+    public function curriculumProgresses(): HasMany
     {
         return $this->hasMany(CurriculumProgress::class, 'users_id');
     }
     // class_clear_checks（子）とのリレーション
-    public function checks()
+    public function checks(): HasMany
     {
-        return $this->hasMany(ClassesClearCheck::class);
+        return $this->hasMany(ClassesClearCheck::class, 'user_id');
     }
 
     public function updateProfile($data) {
@@ -70,34 +72,42 @@ class User extends Authenticatable
             $this->password = bcrypt($data['password']);
         }
 
-        // if (isset($data['profile_image'])) {
-        //     $this->profile_image = $data['profile_image'];
-        // }
-        // 画像ファイルがアップロードされたかどうかをチェック
-        // if (isset($data['profile_image']) && $data['profile_image'] instanceof \Illuminate\Http\UploadedFile) {
-        //     $file_name = $data['profile_image']->getClientOriginalName();
-        //     $data['profile_image']->storeAs('public', $file_name);
-        //     $this->profile_image = $file_name;
-        // }
         if (isset($data['profile_image'])) {
             // 一時ディレクトリから適切な場所に画像を移動
-            $tempPath = 'temp/' . $data['profile_image'];
-            $newFileName = 'profile_' . time() . '_' . $this->id . '.' . pathinfo($data['profile_image'], PATHINFO_EXTENSION);
-            $newPath = 'profile_images/' . $newFileName;
+            $tempPath = $data['profile_image'];
+            // ファイルの元の名前を取得
+            $originalFileName = request()->file('profile_image')->getClientOriginalName();
+
+            // ストレージに保存するパス
+        $storagePath = 'images/profile/' . $originalFileName;
+
+        // データベースに保存するパス
+        $dbPath = 'storage/images/profile/' . $originalFileName;
+
+
+            // 新しいパスを定義
+            // $newFileName = 'storage/images/profile/' . $originalFileName;
+            // $newFileName = 'profile_' . time() . '_' . $this->id . '.' . pathinfo($data['profile_image'], PATHINFO_EXTENSION);
+            // $newPath = 'public/images/profile/' . $originalFileName;
+            // $newPath = 'profile_images/' . $newFileName;
     
-            if (Storage::disk('public')->exists($tempPath)) {
-                Storage::disk('public')->move($tempPath, $newPath);
+            // ディレクトリが存在しない場合は作成
+            if (!Storage::disk('public')->exists('images/profile')) {
+                Storage::disk('public')->makeDirectory('images/profile');
+            }
                 
+            if (Storage::disk('public')->exists($tempPath)) {
+                Storage::disk('public')->move($tempPath, $storagePath);
+            
                 // 古いプロフィール画像を削除（存在する場合）
                 if ($this->profile_image && $this->profile_image !== 'noimage.jpeg') {
-                    Storage::disk('public')->delete('profile_images/' . $this->profile_image);
+                    Storage::disk('public')->delete(str_replace('storage/', '', $this->profile_image));
                 }
-    
-                $this->profile_image = $newFileName;
+
+                // profile_imageフィールドを新しいファイル名で更新
+                $this->profile_image = $dbPath;
             }
         }
-
-
         $this->save();
     }
 }

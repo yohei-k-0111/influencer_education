@@ -1,15 +1,15 @@
 @extends('user.layouts.app')
 @section('title', 'お知らせ')
 @section('content')
-<section>
+<section class="wrapper">
     <div>
-        <a href="#">戻る</a>
+        <a href="{{ route('user.show.top') }}" class="arrow">戻る</a>
     </div>
-</section>
-<section>
-    <p>{{ $date }}</p>
-    <h1>{{ $article->title }}</h1>
-    <p>{{ $article->article_contents }}</p>
+    <div class="user-article">
+        <p>{{ $date }}</p>
+        <h1>{{ $article->title }}</h1>
+        <p>{{ $article->article_contents }}</p>
+    </div>
 </section>
 
 @endsection

@@ -23,14 +23,14 @@ class PasswordEditRequest extends FormRequest
      */
     public function rules()
     {
-            // $rules = [
-            if ($this->isMethod('POST') && $this->filled('password')) {
-                return [
-                    'password' => ['required', 'min:8', 'max:50', 'confirmed'],
-                    'password_confirmation' => ['required'],
-                ];
-            }
-            return [];
+        // $rules = [
+        if ($this->isMethod('POST') && $this->filled('password')) {
+            return [
+                'password' => ['required', 'min:8', 'max:50', 'confirmed'],
+                'password_confirmation' => ['required'],
+            ];
+        }
+        return [];
     }
 
     /**

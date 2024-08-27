@@ -70,7 +70,6 @@ class ProfileController extends Controller
     }
 
     // パスワード変更画面遷移時の処理
-    // public function passwordEdit(UserRequest $request)
     public function passwordEdit(Request $request)
     {
         $user = Auth::user();
@@ -89,13 +88,12 @@ class ProfileController extends Controller
 
         if ($request->filled('password')) {
             session(['temp_password' => $request->password]);
-            return redirect()->route('user.show.profile')->with('message', 'パスワードが一時保存されました。');
+            return redirect()->route('user.show.profile')->with('password_message', 'パスワードが一時保存されました。');
         }
         return redirect()->route('user.show.profile');
     }
 
     public function update(Request $request)
-    // public function update(Request $request)
     {
         // UserRequestのルールを取得してバリデーション
         $userRequest = new UserRequest();
@@ -133,7 +131,7 @@ class ProfileController extends Controller
 
             // 処理が完了したらユーザープロフィール画面にリダイレクト
             // return redirect()->route('user.show.profile')->with('success', 'プロフィールが更新されました。');
-            return redirect()->route('user.show.profile')->with('flash_message', 'プロフィールが更新されました。');
+            return redirect()->route('user.show.profile')->with('profile_message', 'プロフィールが更新されました。');
         } catch (\Exception $e) {
             // エラーが発生した場合はトランザクションロールバック
             DB::rollback();

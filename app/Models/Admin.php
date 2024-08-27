@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User;  //追加
+use Illuminate\Foundation\Auth\User as Authenticatable;  //追加
 use Illuminate\Notifications\Notifiable;  //追加
 // use Illuminate\Database\Eloquent\Model;  コメントアウト
 

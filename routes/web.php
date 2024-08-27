@@ -7,6 +7,9 @@ use App\Http\Controllers\User\ArticleController as UserArticleController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Admin\TopController as AdminTopController;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\Admin\Auth\RegisterController;
+use App\Http\Controllers\Admin\Auth\LoginController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,22 +27,18 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// ルートまとめてみる↓
 Route::prefix('user')->namespace('User')->name('user.')->group(function(){
     Route::get('top', [UserTopController::class, 'showTop'])->name('show.top')->middleware('auth');
     Route::get('progress', [ProgressController::class, 'showProgress'])->name('show.progress')->middleware('auth');
     Route::get('article/{id}', [UserArticleController::class, 'showArticle'])->name('show.article')->middleware('auth');
     Route::get('profile', [ProfileController::class, 'showProfileForm'])->name('show.profile')->middleware('auth');
-    // Route::get('profile', [ProfileController::class, 'showProfileForm'])->name('profile.show')->middleware('auth');
     Route::get('profile/edit', [ProfileController::class, 'profileEdit'])->name('profile.edit')->middleware('auth');
     Route::match(['post', 'put'], 'profile/process', [ProfileController::class, 'buttonRooting'])->name('button.rooting')->middleware('auth');
-
     // パスワード変更画面表示
     Route::get('password/edit', [ProfileController::class, 'passwordEdit'])->name('password.edit')->middleware('auth');
-    // Route::post('password/temp-save', [ProfileController::class, 'tempSavePassword'])->name('password.temp_save')->middleware('auth');
     // パスワード変更情報一時保存
     Route::post('password/temp-save', [ProfileController::class, 'tempSavePassword'])->name('password.temp_save')->middleware('auth');
     // プロフィール情報更新
@@ -47,15 +46,23 @@ Route::prefix('user')->namespace('User')->name('user.')->group(function(){
 });
 
 // Route::view('/admin/login', 'admin/login');
-Route::get('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'showLoginForm']);
-Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login']);
-Route::post('/admin/logout', [App\Http\Controllers\admin\LoginController::class,'logout']);
-Route::view('/admin/register', 'admin/register');
-Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
+Route::prefix('admin')->namespace('Admin/Auth')->name('admin.')->middleware('web')->group(function(){
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('show.login');
+Route::post('login', [LoginController::class, 'login'])->name('login');
+Route::post('logout', [LoginController::class,'logout'])->name('logout');
+Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('register');
+// Route::view('register', [RegisterController::class, 'showRegisterForm']);
+Route::post('register', [RegisterController::class, 'register']);
 Route::view('/admin/home', 'admin/home')->middleware('auth:admin');
+});
 
-Route::prefix('admin')->namespace('Admin')->name('admin')->group(function(){
+Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function(){
     Route::get('top', [AdminTopController::class, 'showTop'])->name('show.top');
-    Route::get('article_list', [AdminarticleController::class, 'showArticleList'])->name('show.article.list');
-    Route::get('article_create', [AdminarticleController::class, 'showArticleCreate'])->name('show.article.create');
+    Route::get('article_list', [AdminArticleController::class, 'showArticleList'])->name('show.article.list');
+    Route::match(['get', 'post'], 'article/process', [AdminArticleController::class, 'buttonRooting'])->name('article.rooting');
+    // Route::match(['post', 'delete'], 'article/process', [AdminArticleController::class, 'buttonRooting'])->name('article.rooting');
+    Route::get('article_create', [AdminArticleController::class, 'articleCreate'])->name('article.create');
+    Route::post('article/store', [AdminArticleController::class, 'store'])->name('article.store');
+    Route::put('article/update/{id}', [AdminArticleController::class, 'update'])->name('article.update');
+    Route::delete('article_destroy', [AdminArticleController::class, 'destroy'])->name('article.destroy');
 });

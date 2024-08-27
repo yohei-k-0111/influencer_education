@@ -1,10 +1,8 @@
 @extends('user.layouts.app')
 @section('title', 'インフルエンサー教育システム')
 @section('content')
-<section>
+<section class="wrapper">
     <div>バナー画像</div>
-</section>
-<section>
     <h1>お知らせ</h1>
     <container>
         @foreach ($articles as $article)

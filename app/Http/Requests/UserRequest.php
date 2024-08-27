@@ -76,7 +76,4 @@ class UserRequest extends FormRequest
             'password.confirmed' => ':attributeが一致しません。',
         ];
     }
-
-
-
 }

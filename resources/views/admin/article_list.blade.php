@@ -1,28 +1,56 @@
 @extends('admin.layouts.app')
 @section('title', 'お知らせ一覧')
 @section('content')
-<section>
+<section class="wrapper">
     <div>
-        <a href="#">戻る</a>
+        <a href="{{ route('admin.show.top') }}" class="arrow">戻る</a>
     </div>
-</section>
-<section>
-    <h1>お知らせ一覧</h1>
-    <button type="button" id="createNew">新規作成</button>
-</section>
-<section>
-    <table>
-        <thead>
-            <tr>投稿日時</tr>
-            <tr>タイトル</tr>
-        </thead>
-        <!-- for文で回す -->
-        <tbody>
-            <td>2023年7月21日</td>
-            <td>授業内容更新についてのお知らせ</td>
-            <td><button type="submit">変更する</button><button type="submit">削除</button></td>
-        
-        </tbody>
-    </table>
+    <div>
+        <!-- フラッシュメッセージ -->
+        @if (session('article_message'))
+        <meta name="success-message" content="{{ session('article_message') }}">    
+        @endif
+    </div>
+    <div class="article-list">
+        <h1>お知らせ一覧</h1>
+        <form action="{{ route('admin.article.rooting') }}" method="POST">
+            @csrf
+            <button type="submit" id="createNew" class="btn btn-success btn-sm create-btn">新規作成</button>
+        </form>
+    
+        <div class="article-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>投稿日時</th>
+                        <th>タイトル</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($articles as $article)
+                    <tr>
+                        <td>{{ $article->formatted_date }}</td>
+                        <td>{{ $article->title }}</td>
+                        <td>
+                            <form action="{{ route('admin.article.rooting') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="article_id" value="{{ $article->id }}">
+                                <button type="submit" value="article_edit" class="btn btn-success btn-sm edit-btn">変更する</button>                    
+                            </form>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger delete-btn btn-sm" data-article_id="{{ $article->id }}" data-url="{{ route('admin.article.destroy') }}">削除</button>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <!-- ページネーションリンク -->
+            {{ $articles->links('pagination::bootstrap-5') }}
+        </div>
+
+    </div>
 </section>
 @endsection

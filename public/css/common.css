@@ -1,0 +1,20 @@
+.wrapper {
+    padding: 2px 10px 20px 10px;
+}
+
+.left-links .right-links {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-success.custom-padding {
+    padding: 0.5px 12px;
+    /* margin: 1px 0; */
+}
+.arrow::before {
+    content: '←';
+}
+
+h1 {
+    font-size: 32px;
+}

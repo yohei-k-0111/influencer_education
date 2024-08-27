@@ -1,0 +1,185 @@
+.nav-links {
+    display: flex;
+    height: 72px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: coral;
+    padding: 0 32px;
+}
+
+/* curriculum_progress */
+.user-profile {
+    display: flex;
+    align-items: flex-end;
+    margin: 16px;
+}
+.user-info {
+    font-size: 24px;
+    line-height: 2;
+}
+.user-grade {
+    font-size: 14px;
+    color: white;
+    background-color: skyblue;
+    padding: 8px 16px;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+.grade-container {
+    width:100%;   
+    justify-content:center;
+    padding: 40px 10%;
+}
+
+.grade-list {
+    max-width:1000px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 80px;
+}
+table {
+    width:200px;
+    padding: 80px;
+}
+
+td {
+    display: flex;
+    justify-content: space-between; /* 左右に要素を配置 */
+    align-items: center; /* 必要に応じて垂直方向に中央揃え */
+}
+
+span.comp {
+    margin-right: auto; /* 左側に配置 */
+    color: red;
+}
+
+.curri-title {
+    margin-left: auto; /* 右側に配置 */
+    text-align: right; /* テキストを右寄せ */
+}
+.table-wrapper {
+    flex: 0 0 calc(33.333% - 20px); /* 固定幅で3つ並ぶように設定 */
+    box-sizing: border-box; /* パディングやボーダーを含めたサイズ計算 */
+    max-width: calc(33.333% - 20px);
+    /* padding: 24px; */
+}
+.surround {
+    font-size: 14px;
+    color: white;
+    padding: 6px 16px;
+    margin-bottom: 6px;
+    border: 1px solid gray;
+    border-radius: 25px;
+    text-align: left;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.lightblue-bg {
+    background-color: lightblue;
+}
+
+.skyblue-bg {
+    background-color: skyblue;
+}
+
+.lightgreen-bg {
+    background-color: lightgreen;
+}
+
+.green-bg {
+    background-color: green;
+}
+
+/* article */
+.user-article {
+    max-width:1000px;
+    padding: 40px 60px;
+}
+
+.user-article > p {
+    margin-bottom: 0;
+    padding-bottom: 8px;
+}
+.user-article > h1 {
+    /* margin-bottom: 24px; */
+    margin-bottom: 2rem;
+}
+
+/* profile_edit */
+.edit-profile {
+    max-width:1000px;
+    padding: 10px 60px;
+}
+.form-control {
+    display: none;
+}
+.profile_image {
+    display: flex;
+    margin-bottom: 1rem;
+}
+.profile {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+}
+.image-title {
+    font-size: 24px;
+    margin-bottom: 1rem;
+}
+.custom-upload {
+    text-align: center;
+    border: 1px solid gray;
+}
+.edit-items {
+    width: 100%;
+}
+.user-item {
+    display: flex;
+    margin-bottom: 0.8rem;
+}
+label {
+    width: 150px;
+    flex-shrink: 0;
+    display: block;
+}
+input {
+    flex-grow: 1;
+    border: 1px solid gray;
+}
+.password {
+    padding: 4px 6px;
+    border: 1px solid gray;
+    background-color: white;
+}
+.profile-register {
+    text-align: center;
+}
+.register-button {
+    font-size: 20px;
+    text-align: center;
+    margin: 2rem 0;
+    color: white;
+    padding: 0 3rem;
+    border: 1px solid gray;
+    background-color: coral;
+}
+
+/* password_edit */
+.passwpord-wrapper {
+    margin-top: 26px;
+}
+.edit-password {
+    max-width:1000px;
+    padding: 10px 60px;
+    margin-top: 50px;
+}
+.temporback-button {
+    font-size: 20px;
+    text-align: center;
+    margin: 2rem 0;
+    color: white;
+    padding: 0 3rem;
+    border: 1px solid gray;
+    background-color: gray;
+}
