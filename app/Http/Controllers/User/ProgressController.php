@@ -18,7 +18,6 @@ class ProgressController extends Controller
         $user = User::with(['grade', 'curriculumProgresses.curriculum'])->where('id', auth()->id())->first();
         $grades = Grade::with('curriculums')->get();
         $curriculumProgresses = $user->curriculumProgresses->keyBy('curriculums_id');
-        // dd($curriculumProgresses);
 
         // 現在の学年のカリキュラムが全てクリアされたかをチェック
         $currentGrade = $user->grade;
@@ -47,7 +46,6 @@ class ProgressController extends Controller
             $user->grade_id = $nextGradeId;
             $user->save();
         }
-
         return view('user.curriculum_progress', compact('user', 'grades', 'curriculumProgresses'));
     }    
 }

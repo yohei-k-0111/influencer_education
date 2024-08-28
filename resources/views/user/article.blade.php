@@ -11,5 +11,4 @@
         <p>{{ $article->article_contents }}</p>
     </div>
 </section>
-
 @endsection

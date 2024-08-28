@@ -44,7 +44,7 @@ $(function() {
                 // const productID = $(this).data('product_id');
                 type: 'POST',
                 url: url,
-                data: {'article_id': articleID, '_method': 'DELETE'} // DELETE リクエストだよ！と教えてあげる。
+                data: {'article_id': articleID, '_method': 'DELETE'} 
             })
 
             .done(function(response) {

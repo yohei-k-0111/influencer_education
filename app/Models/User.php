@@ -26,7 +26,6 @@ class User extends Authenticatable
         'name_kana',
         'email',
         'password',
-        // 'grade_id',
         'profile_image',
     ];
 
@@ -83,13 +82,6 @@ class User extends Authenticatable
 
         // データベースに保存するパス
         $dbPath = 'storage/images/profile/' . $originalFileName;
-
-
-            // 新しいパスを定義
-            // $newFileName = 'storage/images/profile/' . $originalFileName;
-            // $newFileName = 'profile_' . time() . '_' . $this->id . '.' . pathinfo($data['profile_image'], PATHINFO_EXTENSION);
-            // $newPath = 'public/images/profile/' . $originalFileName;
-            // $newPath = 'profile_images/' . $newFileName;
     
             // ディレクトリが存在しない場合は作成
             if (!Storage::disk('public')->exists('images/profile')) {

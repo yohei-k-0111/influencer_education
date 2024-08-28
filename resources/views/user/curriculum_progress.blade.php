@@ -50,7 +50,7 @@
                             @if (isset($curriculumProgresses[$curriculum->id]) && $curriculumProgresses[$curriculum->id]->clear_flg == 1)
                             <span class="comp">受講済</span>
                             @endif
-                            @if ($grade->id == $user->grade_id || (isset($clearCheck) && $clearCheck->grade_id == $grade->id && $clearCheck->clear_flg == 1))
+                            @if ($grade->id <= $user->grade_id || (isset($clearCheck) && $clearCheck->grade_id == $grade->id && $clearCheck->clear_flg == 1))
                             <a class="curri-title" href="{{ $curriculum->video_url }}">{{ $curriculum->title }}</a>
                             @else
                             <a class="curri-title" href="#" tabindex="-1" style="pointer-events: none; color: grey;">{{ $curriculum->title }}</a>

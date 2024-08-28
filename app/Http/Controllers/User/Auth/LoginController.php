@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -27,7 +27,6 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/user/top';
-    // protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -36,12 +35,12 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('/user/logout');
     }
 
     // ログアウト後のリダイレクト先を指定
     protected function loggedOut(Request $request)
     {
-        return redirect('/login');
+        return redirect('/user/login');
     }
 }

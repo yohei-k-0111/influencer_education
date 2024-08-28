@@ -36,7 +36,6 @@
                     @endif
                     <div class="profile">
                         <div class="image-title">プロフィール画像</div>
-                        <!-- <label for="profile_image" class="image-title">プロフィール画像</label> -->
                         <label for="profile_image"  name="profile_image" class="custom-upload">ファイルを選択</label>
                         <input type="file" name="profile_image" id="profile_image" class="form-control" value="{{ old('profile_image', $user->profile_image) }}">
                     </div>
@@ -76,8 +75,7 @@
             </form>
         </div>
     </div>
-        
-    </section>
+</section>
 
 @endsection
 

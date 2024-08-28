@@ -30,13 +30,12 @@
                 <a class="btn btn-success custom-padding" href="#">時間割</a>
                 <a class="btn btn-success custom-padding" href="{{ route('user.show.progress') }}">授業進捗</a>
                 <a class="btn btn-success custom-padding" href="{{ route('user.show.profile') }}">プロフィール設定</a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
             </div>
             <div class="right-links">
-            <!-- item04は削除可能か？ -->
-                <a  class="item04" href="#" onclick="event.preventDefault();
+                <a href="{{ route('user.logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                 ログアウト
                 </a>    
