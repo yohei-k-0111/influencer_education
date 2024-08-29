@@ -22,7 +22,7 @@
 </div>
 
 <div class="media-container">
-    @if($isWithinDeliveryPeriod)
+    @if($isWithinDeliveryPeriod || $filteredCurriculum->always_delivery_flg == 1)
         @php
             $videoId = '';
             if (preg_match('/v=([^&]+)/', $filteredCurriculum->video_url, $matches)) {
@@ -35,15 +35,17 @@
     @endif
 </div>
 
-@if($isWithinDeliveryPeriod && $canAttend) <!-- 期間内かつ受講可能ならボタンを表示 -->
+@if($canAttend)
     <form id="clearForm" action="{{ route('clear') }}" method="POST">
         @csrf
         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
         <input type="hidden" name="curriculum_id" value="{{ $filteredCurriculum->id }}">
-        <button type="submit" class="clear">受講しました</button>
+        <button type="submit" class="clear">受講する</button>
     </form>
+@elseif($isCompleted)
+    <button class="cleardone" disabled>受講済み</button>
 @else
-    <button type="button" class="cleardone" disabled>受講しました</button>
+    <button class="no-clear" disabled>受講期間外</button>
 @endif
 
 @endsection

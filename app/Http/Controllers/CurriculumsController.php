@@ -14,35 +14,43 @@ class CurriculumsController extends Controller
     public function user_stream(Request $request, $id)
     {
         $userId = auth()->user()->id;
-
-        // 進行中のカリキュラムを取得
-        $progressIds = CurriculumProgress::where('users_id', $userId)->pluck('curriculums_id');
-
-        $curriculumsInProgress = Curriculum::whereIn('id', $progressIds)
+    
+        // カリキュラム情報を取得
+        $filteredCurriculum = Curriculum::where('id', $id)
             ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg', 'description')
-            ->get();
-
-        // 常時公開のカリキュラムを取得
-        $curriculumsForCurrentMonth = Curriculum::where('always_delivery_flg', 1)
-            ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg', 'description')
-            ->get();
-
-        $curriculums = $curriculumsInProgress->merge($curriculumsForCurrentMonth);
-
-        $filteredCurriculum = $curriculums->where('id', $id)->first();
-
+            ->first();
+    
+        if (!$filteredCurriculum) {
+            abort(404, 'カリキュラムが見つかりません');
+        }
+    
         // 公開期間をチェック
         $deliveryTime = DeliveryTime::where('curriculums_id', $id)
             ->where('delivery_from', '<=', now())
             ->where('delivery_to', '>=', now())
             ->first();
-
+    
+        // 受講済みかどうかをチェック
+        $isCompleted = CurriculumProgress::where('users_id', $userId)
+            ->where('curriculums_id', $id)
+            ->where('clear_flg', 1)
+            ->exists();
+    
         // 常時公開フラグと公開期間の条件で、$canAttend を設定
         $isWithinDeliveryPeriod = $deliveryTime ? true : false;
-        $canAttend = ($filteredCurriculum->always_delivery_flg == 1) || $isWithinDeliveryPeriod;
+        $canAttend = false;
     
-        return view('user_stream', compact('filteredCurriculum', 'isWithinDeliveryPeriod', 'canAttend'));
+        if ($filteredCurriculum->always_delivery_flg == 1) {
+            // 常時公開の場合
+            $canAttend = !$isCompleted;
+        } elseif ($isWithinDeliveryPeriod) {
+            // 常時公開ではないが、期間内の場合
+            $canAttend = !$isCompleted;
+        }
+    
+        return view('user_stream', compact('filteredCurriculum', 'isWithinDeliveryPeriod', 'canAttend', 'isCompleted'));
     }
+    
       
     public function show($id)
     {
