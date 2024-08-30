@@ -1,5 +1,10 @@
 $(document).ready(function () {
     $('body').on('click', '.clear', function (e) {
+        // ボタンがdisabledされていたら、何もせず処理を中断する
+        if ($(this).prop('disabled')) {
+            return;
+        }
+
         e.preventDefault();
 
         var csrfToken = $('meta[name="csrf-token"]').attr('content');

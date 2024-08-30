@@ -15,14 +15,21 @@ class CurriculumsController extends Controller
     {
         $userId = auth()->user()->id;
     
-        // カリキュラム情報を取得
-        $filteredCurriculum = Curriculum::where('id', $id)
-            ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg', 'description')
-            ->first();
+        // 進行中のカリキュラムを取得
+        $progressIds = CurriculumProgress::where('users_id', $userId)->pluck('curriculums_id');
     
-        if (!$filteredCurriculum) {
-            abort(404, 'カリキュラムが見つかりません');
-        }
+        $curriculumsInProgress = Curriculum::whereIn('id', $progressIds)
+            ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg', 'description')
+            ->get();
+    
+        // 常時公開のカリキュラムを取得
+        $curriculumsForCurrentMonth = Curriculum::where('always_delivery_flg', 1)
+            ->select('id', 'title', 'video_url', 'thumbnail', 'always_delivery_flg', 'description')
+            ->get();
+    
+        $curriculums = $curriculumsInProgress->merge($curriculumsForCurrentMonth);
+    
+        $filteredCurriculum = $curriculums->where('id', $id)->first();
     
         // 公開期間をチェック
         $deliveryTime = DeliveryTime::where('curriculums_id', $id)
@@ -30,23 +37,14 @@ class CurriculumsController extends Controller
             ->where('delivery_to', '>=', now())
             ->first();
     
-        // 受講済みかどうかをチェック
+        // 公開期間と常時公開フラグの条件で、$isWithinDeliveryPeriodを設定
+        $isWithinDeliveryPeriod = $deliveryTime ? true : false;
+        $canAttend = ($filteredCurriculum->always_delivery_flg == 1) || $isWithinDeliveryPeriod;
+    
+        // 受講済みかどうかを確認
         $isCompleted = CurriculumProgress::where('users_id', $userId)
             ->where('curriculums_id', $id)
-            ->where('clear_flg', 1)
-            ->exists();
-    
-        // 常時公開フラグと公開期間の条件で、$canAttend を設定
-        $isWithinDeliveryPeriod = $deliveryTime ? true : false;
-        $canAttend = false;
-    
-        if ($filteredCurriculum->always_delivery_flg == 1) {
-            // 常時公開の場合
-            $canAttend = !$isCompleted;
-        } elseif ($isWithinDeliveryPeriod) {
-            // 常時公開ではないが、期間内の場合
-            $canAttend = !$isCompleted;
-        }
+            ->value('clear_flg') == 1;
     
         return view('user_stream', compact('filteredCurriculum', 'isWithinDeliveryPeriod', 'canAttend', 'isCompleted'));
     }

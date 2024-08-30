@@ -51,6 +51,23 @@ h3{
     top: 40%;
 }
 
+.no-clear {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6; 
+    position: absolute;
+    font-weight: bold;
+    border: none;
+    border-radius: 10%;
+    font-size: 30px;
+    color: white;
+    background-color: gray;
+    text-decoration: none;
+    left: 75%;
+    top: 40%;
+}
+
+
 .delete{
     position: absolute;
     font-weight: bold;
