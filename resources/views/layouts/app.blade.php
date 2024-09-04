@@ -19,7 +19,7 @@
             <div class="container">               
                 <!-- 仮のリンク -->
                 <a href="{{ route('jikanbu') }}"button class="header-button" >時間割</a>                       
-                <a href="{{ route('clear') }}"button class="header-button" >授業進捗</a>
+                <a href="{{ route('lessons') }}"button class="header-button" >授業進捗</a>
                 <a href="{{ route('profile-setting') }}"button class="header-button" >プロフィール設定</a>
 
                 <div>

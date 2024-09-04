@@ -15,6 +15,12 @@ class CurriculumsController extends Controller
     {
         $userId = auth()->user()->id;
     
+        // 進捗レコードを取得
+        $progress = CurriculumProgress::firstOrCreate(
+            ['users_id' => $userId, 'curriculums_id' => $id],
+            ['clear_flg' => 0] 
+        );
+    
         // 進行中のカリキュラムを取得
         $progressIds = CurriculumProgress::where('users_id', $userId)->pluck('curriculums_id');
     
@@ -42,9 +48,7 @@ class CurriculumsController extends Controller
         $canAttend = ($filteredCurriculum->always_delivery_flg == 1) || $isWithinDeliveryPeriod;
     
         // 受講済みかどうかを確認
-        $isCompleted = CurriculumProgress::where('users_id', $userId)
-            ->where('curriculums_id', $id)
-            ->value('clear_flg') == 1;
+        $isCompleted = $progress->clear_flg == 1;
     
         return view('user_stream', compact('filteredCurriculum', 'isWithinDeliveryPeriod', 'canAttend', 'isCompleted'));
     }
@@ -93,12 +97,13 @@ class CurriculumsController extends Controller
         if (!$deliveryTime) {
             return response()->json(['success' => false, 'message' => 'このカリキュラムは受講できません。']);
         }
-    
+
+        // 進捗の作成/更新
         $progress = CurriculumProgress::updateOrCreate(
             ['users_id' => $userId, 'curriculums_id' => $curriculumId],
             ['clear_flg' => 1]
         );
     
-        return response()->json(['success' => true, 'redirect' => route('top')]);
+        return response()->json(['success' => true, 'redirect' => route('lessons')]);
     }
 }

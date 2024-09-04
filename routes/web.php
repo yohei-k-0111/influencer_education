@@ -36,6 +36,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/top', [App\Http\Controllers\ArticlesController::class, 'top'])->name('top')->middleware('auth');
 Route::get('/curriculums/user_stream/{id}', [CurriculumsController::class, 'user_stream'])->name('user_stream')->middleware('auth');
 Route::post('/clear', [CurriculumsController::class, 'clear'])->name('clear');
+Route::get('/clear', [CurriculumsController::class, 'clear'])->name('clear.get');
+
 
 // 時間割ページへのルート仮
 Route::get('/jikan-bu', function () {

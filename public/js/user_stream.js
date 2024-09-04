@@ -49,3 +49,19 @@ $(document).ready(function () {
         }
     });
 });
+
+$('form#clearForm').on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        success: function(response) {
+            // 成功時の処理
+        },
+        error: function(xhr) {
+            // エラー時の処理
+        }
+    });
+});

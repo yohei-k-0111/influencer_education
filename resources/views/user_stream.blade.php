@@ -36,7 +36,7 @@
 </div>
 
 @if($isWithinDeliveryPeriod && !$isCompleted)
-    <form id="clearForm" action="{{ route('clear') }}" method="POST">
+    <form id="clearForm" action="{{ route('lessons') }}" method="POST">
         @csrf
         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
         <input type="hidden" name="curriculum_id" value="{{ $filteredCurriculum->id }}">
