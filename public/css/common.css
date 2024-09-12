@@ -9,7 +9,6 @@
 
 .btn-success.custom-padding {
     padding: 0.5px 12px;
-    /* margin: 1px 0; */
 }
 .arrow::before {
     content: '←';

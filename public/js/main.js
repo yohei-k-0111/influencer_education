@@ -1,7 +1,3 @@
-// function setMethod(method) {
-//     document.getElementById('form_method').value = method;
-// }
-
 // profile_edit.blade.phpのフラッシュメッセージ処理
 $(document).ready(function() {
     // Toastrのオプションを設定
@@ -41,7 +37,6 @@ $(function() {
 
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                // const productID = $(this).data('product_id');
                 type: 'POST',
                 url: url,
                 data: {'article_id': articleID, '_method': 'DELETE'} 

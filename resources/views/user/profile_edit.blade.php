@@ -36,40 +36,40 @@
                     @endif
                     <div class="profile">
                         <div class="image-title">プロフィール画像</div>
-                        <label for="profile_image"  name="profile_image" class="custom-upload">ファイルを選択</label>
-                        <input type="file" name="profile_image" id="profile_image" class="form-control" value="{{ old('profile_image', $user->profile_image) }}">
+                        <label for="profile_image" name="profile_image" class="custom-upload">ファイルを選択</label>
+                        <input type="file" name="profile_image" id="profile_image" class="form-control">
                     </div>
                 </div>
                 <div class="edit-items">
                     <div class="user-item">
                         <label for="name">ユーザーネーム</label>
                         <input type="text" name="name" value="{{ old('name', session('temp_profile_data.name', $user->name)) }}">
-                        @if($errors->has('name'))
-                        <p class="text-danger">{{ $errors->first('name') }}</p>
-                        @endif
                     </div>
+                    @if($errors->has('name'))
+                    <p class="text-danger">{{ $errors->first('name') }}</p>
+                    @endif
                     <div class="user-item">
                         <label for="name_kana">カナ</label>
                         <input type="text"  name="name_kana" value="{{ old('name_kana', session('temp_profile_data.name_kana', $user->name_kana)) }}">
-                        @if($errors->has('name_kana'))
-                        <p class="text-danger">{{ $errors->first('name_kana') }}</p>
-                        @endif
                     </div>
+                    @if($errors->has('name_kana'))
+                    <p class="text-danger">{{ $errors->first('name_kana') }}</p>
+                    @endif
                     <div class="user-item">
                         <label for="email">メールアドレス</label>
                         <input type="email"  name="email" value="{{ old('email', session('temp_profile_data.email', $user->email)) }}">
-                        @if($errors->has('email'))
-                        <p class="text-danger">{{ $errors->first('email') }}</p>
-                        @endif
                     </div>
+                    @if($errors->has('email'))
+                    <p class="text-danger">{{ $errors->first('email') }}</p>
+                    @endif
                     <div class="user-item">
                         <label>パスワード</label>
-                        <input type="hidden" name="password" value="{{ session('temp_password') }}">
+                        <input type="hidden" name="new_password" value="{{ session('temp_profile_data.new_password') }}">
                         <button type="submit" name="action" value="password_edit" class="password">パスワードを変更する</button>
                     </div>
                     <div class="profile-register">
                         @method('PUT')
-                        <button type="submit" name="action" value="profile_register" class=" register-button">登録</button>
+                        <button type="submit" name="action" value="profile_register" class="register-button">登録</button>
                     </div>
                 </div>
             </form>

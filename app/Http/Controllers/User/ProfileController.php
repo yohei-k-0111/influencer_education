@@ -10,6 +10,8 @@ use App\Http\Requests\PasswordEditRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -17,12 +19,12 @@ class ProfileController extends Controller
     public function showProfileForm()
     {
         $user = Auth::user();
-        $tempData = session('temp_data', []);
+        $tempData = session('temp_profile_data', []);
         return view('user.profile_edit', compact('user', 'tempData'));
     }
 
     // パスワード変更画面遷移と登録処理の分岐
-    public function buttonRooting(Request $request)
+    public function buttonRooting(UserRequest $request)
     {
         $currentData = [
             'name' => $request->input('name'),
@@ -42,109 +44,79 @@ class ProfileController extends Controller
 
         if ($request->hasFile('profile_image')) {
             $path = $request->file('profile_image')->store('temp', 'public');
-            session(['temp_profile_image' => $path]);
+            session(['temp_profile_data.profile_image' => $path]);
         }
     
         $action = $request->input('action');
 
         if($action === 'password_edit'){
-            return redirect()->route('user.password.edit')
-                ->withInput($request->except(['action', 'profile_image']));
+            // パスワード編集画面へのリダイレクト時にセッションにデータを保存
+            session(['temp_profile_data' => $request->except(['action', 'profile_image'])]);
+            return redirect()->route('user.password.edit');
         } elseif($action === 'profile_register'){
-            // return redirect()->route('user.profile.update');
-            $userRequest = new UserRequest();
-            $rules = $userRequest->rules();
-
-            // バリデーションを実行
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         // バリデーションが成功した場合、updateメソッドを呼び出す
         return $this->update($request);
         }
+
+        // 不正なアクションの場合
+        return redirect()->back()->with('error', '不正な操作です。');
     }
 
     // パスワード変更画面遷移時の処理
     public function passwordEdit(Request $request)
     {
         $user = Auth::user();
-        $tempPassword = session('temp_password');
-        return view('user.password_edit', compact('user', 'tempPassword'));
-
-        // 一時保存し戻るボタンをクリックされた場合
-        if($request->input('back') == 'back'){
-            return redirect()->route('user.password_edit')
-                ->withInput();
-        }
+        return view('user.password_edit', compact('user'))->withInput($request->old());
     }
 
     public function tempSavePassword(PasswordEditRequest $request)
     {
+        session(['temp_password' => $request->new_password]);
 
-        if ($request->filled('password')) {
-            session(['temp_password' => $request->password]);
-            return redirect()->route('user.show.profile')->with('password_message', 'パスワードが一時保存されました。');
-        }
-        return redirect()->route('user.show.profile');
+        return redirect()->route('user.show.profile')
+            ->withInput($request->except('new_password', 'new_password_confirmation'))
+            ->with('password_message', 'パスワードが一時保存されました。');
+
     }
 
-    public function update(Request $request)
+    public function update(UserRequest $request)
     {
-        // UserRequestのルールを取得してバリデーション
-        $userRequest = new UserRequest();
-        $validator = Validator::make($request->all(), $userRequest->rules());
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $data = $validator->validated();
-
         // ユーザーを取得
         $user = Auth::user();
+        $data = $request->validated();
+        $tempData = session('temp_profile_data', []);
+
+        if (session()->has('temp_password')) {
+            $data['password'] = session('temp_password');
+            session()->forget('temp_password');
+        }
+        // 一時保存されたプロフィール画像があれば、それを使用
+        if (isset($tempData['profile_image'])) {
+            $data['profile_image'] = $tempData['profile_image'];
+        }
 
         // トランザクション開始
         DB::beginTransaction();
 
         try {
-            // $data = $request->validated();
-            // セッションに一時保存されたパスワードがあれば、それを使用
-            if (session()->has('temp_password')) {
-                $data['password'] = session('temp_password');
-                session()->forget('temp_password');  // 使用後はセッションから削除
-            } 
-
-            if (session()->has('temp_profile_image')) {
-                $data['profile_image'] = session('temp_profile_image');
-                session()->forget('temp_profile_image');
-            }
-
             $user->updateProfile($data);
             DB::commit();
 
             // 処理が完了したらユーザープロフィール画面にリダイレクト
-            // return redirect()->route('user.show.profile')->with('success', 'プロフィールが更新されました。');
             return redirect()->route('user.show.profile')->with('profile_message', 'プロフィールが更新されました。');
         } catch (\Exception $e) {
             // エラーが発生した場合はトランザクションロールバック
             DB::rollback();
-            return back()->with('error', 'プロフィールの更新に失敗しました。');
+            return back()->with('error', 'プロフィールの更新に失敗しました。')->withInput();
         }
     }
 
     public function __destruct()
     {
         // セッションが終了したときに一時ファイルを削除
-        if (session()->has('temp_profile_image')) {
-            Storage::disk('public')->delete(session('temp_profile_image'));
-            session()->forget('temp_profile_image');
+        if (session()->has('temp_profile_data.profile_image')) {
+            Storage::disk('public')->delete(session('temp_profile_data.profile_image'));
+            session()->forget('temp_profile_data.profile_image');
         }
     }
 }

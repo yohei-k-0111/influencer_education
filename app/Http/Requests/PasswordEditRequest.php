@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class PasswordEditRequest extends FormRequest
 {
@@ -23,14 +26,30 @@ class PasswordEditRequest extends FormRequest
      */
     public function rules()
     {
-        // $rules = [
-        if ($this->isMethod('POST') && $this->filled('password')) {
-            return [
-                'password' => ['required', 'min:8', 'max:50', 'confirmed'],
-                'password_confirmation' => ['required'],
-            ];
-        }
-        return [];
+        return [
+            'current_password' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Auth::user()->password)) {
+                        $fail($this->messages()['current_password.match'] ?? '現在のパスワードが一致しません。');
+                    }
+                },
+            ],
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:50',
+                'confirmed',
+                function ($attribute, $value, $fail) {
+                    if (Hash::check($value, Auth::user()->password)) {
+                        $fail($this->messages()['new_password.different'] ?? '新しいパスワードが現在のパスワードと重複しています。');
+                    }
+                },
+                Rule::notIn([$this->current_password])  // 現在のパスワードと同じ値を禁止
+            ],
+        ];
     }
 
     /**
@@ -42,7 +61,8 @@ class PasswordEditRequest extends FormRequest
     public function attributes()
     {
         return [
-            'password' => 'パスワード',
+            'current_password' => '現在のパスワード',
+            'new_password' => '新しいパスワード',
         ];
     }
 
@@ -53,10 +73,14 @@ class PasswordEditRequest extends FormRequest
      */
     public function messages() {
         return [
-            'password.required' => ':attributeが入力されていません。',
-            'password.min' => ':attributeは半角半角8〜50文字にして下さい。',
-            'password.max' => ':attributeは半角半角8〜50文字にして下さい。',
-            'password.confirmed' => ':attributeが一致しません。',
+            'current_password.required' => ':attributeが入力されていません。',
+            'current_password.match' => ':attributeが一致しません。',
+            'new_password.required' => ':attributeが入力されていません。',
+            'new_password.min' => ':attributeは半角半角8〜50文字にしてください。',
+            'new_password.max' => ':attributeは半角半角8〜50文字にしてください。',
+            'new_password.confirmed' => ':attributeが一致しません。',
+            'new_password.not_in' => ':attributeが現在のパスワードと重複しています。',
+            'new_password.different' => ':attributeが現在のパスワードと重複しています。',
         ];
     }
 }

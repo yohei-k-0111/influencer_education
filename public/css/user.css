@@ -61,7 +61,6 @@ span.comp {
     flex: 0 0 calc(33.333% - 20px); /* 固定幅で3つ並ぶように設定 */
     box-sizing: border-box; /* パディングやボーダーを含めたサイズ計算 */
     max-width: calc(33.333% - 20px);
-    /* padding: 24px; */
 }
 .surround {
     font-size: 14px;
@@ -102,7 +101,6 @@ span.comp {
     padding-bottom: 8px;
 }
 .user-article > h1 {
-    /* margin-bottom: 24px; */
     margin-bottom: 2rem;
 }
 
@@ -174,12 +172,22 @@ input {
     padding: 10px 60px;
     margin-top: 50px;
 }
-.temporback-button {
+.update-button {
     font-size: 20px;
     text-align: center;
     margin: 2rem 0;
     color: white;
     padding: 0 3rem;
     border: 1px solid gray;
+    background-color: #198754;
+}
+.back-button {
+    font-size: 20px;
+    text-align: center;
+    margin: 2rem 0 2rem 0.2rem;
+    color: white;
+    padding: 0 3rem;
+    border: 1px solid gray;
     background-color: gray;
+    display: inline-block;
 }

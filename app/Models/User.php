@@ -65,10 +65,17 @@ class User extends Authenticatable
     }
 
     public function updateProfile($data) {
+        // \Log::info('UpdateProfile method called with data: ' . $data); // ログ追加
+        \Log::info('UpdateProfile method called with data: ' . json_encode($data));
+
         $this->fill($data);
 
         if (isset($data['password'])) {
             $this->password = bcrypt($data['password']);
+            // $this->password = $data['password'];
+            \Log::info('Password updated in model'); // ログ追加
+        } else {
+            \Log::info('No password data received');
         }
 
         if (isset($data['profile_image'])) {
@@ -78,10 +85,10 @@ class User extends Authenticatable
             $originalFileName = request()->file('profile_image')->getClientOriginalName();
 
             // ストレージに保存するパス
-        $storagePath = 'images/profile/' . $originalFileName;
+            $storagePath = 'images/profile/' . $originalFileName;
 
-        // データベースに保存するパス
-        $dbPath = 'storage/images/profile/' . $originalFileName;
+            // データベースに保存するパス
+            $dbPath = 'storage/images/profile/' . $originalFileName;
     
             // ディレクトリが存在しない場合は作成
             if (!Storage::disk('public')->exists('images/profile')) {
@@ -100,6 +107,11 @@ class User extends Authenticatable
                 $this->profile_image = $dbPath;
             }
         }
-        $this->save();
+        // $this->save();
+        // $this->fill($data);
+        $result = $this->save();
+        \Log::info('Save result: ' . ($result ? 'true' : 'false')); // ログ追加
+
+    return $result;
     }
 }

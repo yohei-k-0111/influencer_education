@@ -29,7 +29,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-// ユーザー用
+// user用
 Route::prefix('user')->namespace('User\Auth')->name('user.')->group(function(){
     Route::get('login', [UserLoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [UserLoginController::class, 'login']);
@@ -53,6 +53,7 @@ Route::prefix('user')->namespace('User')->name('user.')->group(function(){
     Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
 });
 
+// admin用
 Route::prefix('admin')->namespace('App\Http\Controllers\Admin\Auth')->name('admin.')->group(function(){
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AdminLoginController::class, 'login']);
