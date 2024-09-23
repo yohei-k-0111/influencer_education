@@ -408,14 +408,14 @@ body {
   .alert-danger {
     /* エラーメッセージ */
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     color: red;
   }
 
   /* 戻るボタン */
   .button--return {
-    margin: 0px 20px;
+    font-size: 22px;
   }
 
 
@@ -443,7 +443,7 @@ body {
     flex-wrap: wrap;
   }
 
-  /* フラッシュメッセージ */
+  /* フラッシュメッセージ（エラーメッセージは別途、共通フォントで） */
   .main-content--header__flash-message {
     width: 100%;
   }
@@ -481,13 +481,16 @@ body {
     max-height: 150px;
   }
   .curriculum-content__title {
-    margin-bottom: 20px;
+    height: 40px;
+    line-height:20px;
+    overflow-y: scroll;
+    margin-bottom: 2px;
   }
   .curriculum-content__delivery {
     text-align: center;
     height: 124px;
     overflow-y: scroll;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   .curriculum-content__delivery tr {
     display: block;
@@ -595,9 +598,10 @@ body {
   .description-row {
     height: 110px;
   }
-  .description-row input {
+  .description-row textarea {
     height: 90px;
-    vertical-align: top;
+    width: 400px;
+    resize: none;
   }
   .description-row label {
     vertical-align: top;

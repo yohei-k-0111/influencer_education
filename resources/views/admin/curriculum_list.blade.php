@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="main-outline">
-<div class="button--return">
-        <!-- 管理トップ画面へ戻るボタン -->
-        <a href="{{ url('admin/top') }}">{{ "←戻る" }}</a>
-    </div>
     <div class="main-content">
         <div class="main-content--header">
+            <!-- 管理トップ画面へ戻るボタン -->
+            <div class="button--return">
+                <a href="{{ url('admin/top') }}">{{ "←戻る" }}</a>
+            </div>
             <!-- 画面タイトル -->
             <h1 class="main-content--header__display-title">授業一覧</h1>
             <div class="main-content--header__middle">

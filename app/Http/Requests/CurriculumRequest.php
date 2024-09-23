@@ -21,12 +21,12 @@ class CurriculumRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-     public function rules() {
+    public function rules() {
         // 授業新規登録・授業更新フォームのバリデーションロジックを定義
         return [
-            'title' => 'required | max:255',
+            'title' => 'required | max:25',
             'video_url' => 'url | max:255 | nullable',
-            'description' => 'max:2000 | nullable',
+            'description' => 'max:10 | nullable',
             'thumbnail' => 'mimes:jpeg,jpg,png | max:2048 | nullable',
         ];
     }
@@ -35,12 +35,12 @@ class CurriculumRequest extends FormRequest
         // 上記のバリデーションエラー時のメッセージを定義
         return [
             'title.required' => '「授業名」は必須項目です',
-            'title.max:50' => '「授業名」は全角174文字以下で入力してください',
+            'title.max' => '「授業名」は255文字以下で入力してください',
             'video_url.url' => '「動画URL」の書式に誤りがあります',
-            'video_url.max:255' => '「動画URL」は半角255以下で入力してください',
-            'description.max:2000' => '「授業概要」は全角1000文字以下で入力してください',
-            'thumbnail.mimes:jpeg,jpg,png' => '「サムネイル画像」はjpeg,jpg,png形式にしてください',
-            'thumbnail.max:2048KB' => '「サムネイル画像」は2MB以下のファイルサイズにしてください',
+            'video_url.max' => '「動画URL」は255文字以下で入力してください',
+            'description.max' => '「授業概要」は1000文字以下で入力してください',
+            'thumbnail.mimes' => '登録できる画像形式は「jpeg」「jpg」「png」形式です',
+            'thumbnail.max' => '画像サイズは2MB以下にしてください',
         ];
     }
 }

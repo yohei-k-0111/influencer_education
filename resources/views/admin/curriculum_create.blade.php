@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="main-outline">
-    <div class="button--return">
-        <!-- 授業一覧画面へ戻るボタン -->
-        <a href="{{ route('admin.show.curriculum.list') }}">{{ "←戻る" }}</a>
-    </div>
     <div class="main-content">
         <div class="main-content--header">
+            <!-- 管理トップ画面へ戻るボタン -->
+            <div class="button--return">
+                <a href="{{ route('admin.show.curriculum.list') }}">{{ "←戻る" }}</a>
+            </div>
             <!-- 画面タイトル -->
             <h1 class="main-content--header__display-title">{{ "新規授業登録" }}</h1>
             <div class="main-content--header__alert">
@@ -53,7 +53,7 @@
                     </li>
                     <li class="form--item__list description-row">
                         <label for="crtDescription">{{ "授業概要" }}</label>
-                        <input type="textarea" name="description" id="crtDescription">
+                        <textarea name="description" id="crtDescription" wrap="hard" maxlength="2000"></textarea>
                     </li>
                     <li class="form--item__list flg-row">
                         <div class="flg-row--check-box">

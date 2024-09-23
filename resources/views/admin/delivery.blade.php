@@ -2,106 +2,108 @@
 
 @section('content')
 <div class="main-outline">
-    <div class="button--return">
-        <!-- 授業一覧画面へ戻るボタン -->
-        <a href="{{ route('admin.show.curriculum.list') }}">{{ "←戻る" }}</a>
-    </div>
     <div class="main-content">
-    <div class="main-content--header">
+        <div class="main-content--header">
+            <!-- 授業一覧画面へ戻るボタン -->
+            <div class="button--return">
+                <a href="{{ route('admin.show.curriculum.list') }}">{{ "←戻る" }}</a>
+            </div>
             <!-- 画面タイトル -->
             <h1 class="main-content--header__display-title">配信時間設定</h1>
             <!-- 選択中の授業名 -->
             <h2 class="main-content--header__curriculum-title">{{ $curriculum->title }}</h2>
-    </div>
-    <div class="main-content--body">
-        <!-- エラーメッセージ -->
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
         </div>
-        @endif
+        <div class="main-content--body">
+            <!-- エラーメッセージ -->
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
 
-        <!-- 入力フォーム＆削除ボタン -->
-        <div class="form--item form--item__delivery">
-            <!-- 配信日時入力フォーム列 -->
-            <!-- POST送信するvalue値を配列recordsに格納する -->
-            <form id="deliveryForm" class="form form--item__column" action="{{ route('admin.show.delivery.upsert') }}" method="POST">
-                @csrf
-                <table id="deliveryFormRecords">
+            <!-- 入力フォーム＆削除ボタン -->
+            <div class="form--item form--item__delivery">
+                <!-- 配信日時入力フォーム列 -->
+                <!-- POST送信するvalue値を配列recordsに格納する -->
+                <form id="deliveryForm" class="form form--item__column" action="{{ route('admin.show.delivery.upsert') }}" method="POST">
+                    @csrf
+                    <!-- 入力フォーム列 -->
+                    <table id="deliveryFormRecords">
+                        @if($record_count > 0)
+                        <!-- 配信設定が存在する場合 -->
+                        @foreach ($delivery_times as $index => $delivery_time)
+                        <tr class="delivery--row__form" data-deliveryTimeId="{{ $delivery_time->id }}">
+                            <td>
+                                <input type="date" value="{{ $delivery_time->date_from }}" name="records[{{ $index }}][date_from]" placeholder="年月日">
+                                <input type="time" value="{{ $delivery_time->time_from }}" name="records[{{ $index }}][time_from]" placeholder="時間">
+                            </td>
+                            <td class="delivery__wave-dash">〜</td>
+                            <td>
+                                <input type="date" value="{{ $delivery_time->date_to }}" name="records[{{ $index }}][date_to]" placeholder="年月日">
+                                <input type="time" value="{{ $delivery_time->time_to }}" name="records[{{ $index }}][time_to]" placeholder="時間">
+                            </td>
+                        </tr>
+                            <!-- hidden -->
+                            <input type="hidden" value="{{ $delivery_time->id }}" name="records[{{ $index }}][id]">
+                            <input type="hidden" value="{{ $delivery_time->curriculums_id }}" name="records[{{ $index }}][curriculums_id]">
+                        @endforeach
+                        <!-- 配信設定が存在しない場合は空行を1行表示 -->
+                        @else
+                        <tr class="delivery--row__form">
+                            <td>
+                                <input type="date" name="records[0][date_from]" placeholder="年月日">
+                                <input type="time" name="records[0][time_from]" placeholder="時間">
+                            </td>
+                            <td class="delivery__wave-dash">〜</td>
+                            <td>
+                                <input type="date" name="records[0][date_to]" placeholder="年月日">
+                                <input type="time" name="records[0][time_to]" placeholder="時間">
+                            </td>
+                        </tr>
+                            <!-- hidden -->
+                            <input type="hidden" name="records[0][id]">
+                            <input type="hidden" name="records[0][curriculums_id]" value="{{ $id }}">
+                        @endif
+                    </table>
+                    <!-- hidden -->
+                    <input type="hidden" name="curriculums_id" value="{{ $id }}">
+                    <br>
+                    <div>
+                        <!-- 行追加ボタン -->
+                        <button class="delivery--button__add-record circle-button" type="button" id="addRecordBtn">{{ "＋" }}</button>
+                    </div>
+                    <br>
+                    <div class="form--button">
+                        <!-- 登録ボタン -->
+                        <button class="form--button__tag form--button__delivery" id="deliveryBtnRegister" type="button">一括登録</button>
+                    </div>
+                </form>
+                <div class="form--item__column"></div>
+                <!-- 削除ボタン列 -->
+                <table id="deliveryBtnRecords" class="form--item__column" >
                     @if($record_count > 0)
                     <!-- 配信設定が存在する場合 -->
                     @foreach ($delivery_times as $index => $delivery_time)
-                    <tr class="delivery--row__form" data-deliveryTimeId="{{ $delivery_time->id }}">
-                        <td>
-                            <input type="date" value="{{ $delivery_time->date_from }}" name="records[{{ $index }}][date_from]" placeholder="年月日">
-                            <input type="time" value="{{ $delivery_time->time_from }}" name="records[{{ $index }}][time_from]" placeholder="時間">
-                        </td>
-                        <td class="delivery__wave-dash">〜</td>
-                        <td>
-                            <input type="date" value="{{ $delivery_time->date_to }}" name="records[{{ $index }}][date_to]" placeholder="年月日">
-                            <input type="time" value="{{ $delivery_time->time_to }}" name="records[{{ $index }}][time_to]" placeholder="時間">
-                        </td>
-                    </tr>
-                        <!-- hidden -->
-                        <input type="hidden" value="{{ $delivery_time->id }}" name="records[{{ $index }}][id]">
-                        <input type="hidden" value="{{ $delivery_time->curriculums_id }}" name="records[{{ $index }}][curriculums_id]">
+                        <tr class="delivery--row__delete" data-deliveryTimeId="{{ $delivery_time->id }}">
+                            <td>
+                                <form method="POST" class="delivery--form__delete" name="records[{{ $index }}][id]" action="{{ route('admin.show.delivery.destroy', $delivery_time->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="curriculums_id" value="{{ $delivery_time->curriculums_id }}">
+                                    <!-- 削除ボタン -->
+                                    <input class="delivery--button__delete circle-button" type="button" value="ー">
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
-                    <!-- 配信設定が存在しない場合は空行を1行表示 -->
-                    @else
-                    <tr class="delivery--row__form">
-                        <td>
-                            <input type="date" name="records[0][date_from]" placeholder="年月日">
-                            <input type="time" name="records[0][time_from]" placeholder="時間">
-                        </td>
-                        <td class="delivery__wave-dash">〜</td>
-                        <td>
-                            <input type="date" name="records[0][date_to]" placeholder="年月日">
-                            <input type="time" name="records[0][time_to]" placeholder="時間">
-                        </td>
-                    </tr>
-                        <!-- hidden -->
-                        <input type="hidden" name="records[0][id]">
-                        <input type="hidden" name="records[0][curriculums_id]" value="{{ $id }}">
                     @endif
+                    <!-- 配信設定が存在しない場合は削除ボタンなし -->
                 </table>
-                    <!-- hidden -->
-                    <input type="hidden" name="curriculums_id" value="{{ $id }}">
-                <br>
-                <div>
-                    <!-- 行追加ボタン -->
-                    <button class="delivery--button__add-record circle-button" type="button" id="addRecordBtn">{{ "＋" }}</button>
-                </div>
-                <br>
-                <div class="form--button">
-                    <!-- 登録ボタン -->
-                    <button class="form--button__tag form--button__delivery" id="deliveryBtnRegister" type="button">一括登録</button>
-                </div>
-            </form>
-            <div class="form--item__column"></div>
-            <!-- 削除ボタン列 -->
-            <table id="deliveryBtnRecords" class="form--item__column" >
-                @if($record_count > 0)
-                <!-- 配信設定が存在する場合 -->
-                @foreach ($delivery_times as $index => $delivery_time)
-                    <tr class="delivery--row__delete" data-deliveryTimeId="{{ $delivery_time->id }}">
-                        <td>
-                            <form method="POST" class="delivery--form__delete" name="records[{{ $index }}][id]" action="{{ route('admin.show.delivery.destroy', $delivery_time->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="curriculums_id" value="{{ $delivery_time->curriculums_id }}">
-                                <!-- 削除ボタン -->
-                                <input class="delivery--button__delete circle-button" type="button" value="ー">
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-                @endif
-                <!-- 配信設定が存在しない場合は削除ボタンなし -->
-            </table>
+            </div>
         </div>
     </div>
 </div>
@@ -210,13 +212,13 @@
                 let dlt_curriculums_id = this_click.siblings('input[name="curriculums_id"]').val(); // thisのcurriculums_id
                 let delete_record_button = this_click.parents('.delivery--row__delete'); // 削除対象行のボタン要素
                 let hundle_id_value = delete_record_button.attr('data-deliveryTimeId'); // 削除対象の配信日時id　※送信データを明確にするため、かつ対応するフォーム側要素を取得するため
-                let delete_record_form = $('#deliveryFormRecords').find('tr[data-hundleRecord="' + hundle_id_value + '"]'); // 削除対象行のフォーム要素
+                let delete_record_form = $('#deliveryFormRecords').find('tr[data-deliveryTimeId="' + hundle_id_value + '"]'); // 削除対象行のフォーム要素
                 let delete_url = '/influencer_education/public/admin/delivery_destroy/' + hundle_id_value; // 正しいidを付与してリクエストするために送信url定義
 
                 console.log("登録行 削除クリック");
-                console.log("カリキュラムid："+dlt_curriculums_id);
-                console.log("配信日時id："+hundle_id_value);
-                console.log("送信url："+delete_url);
+                console.log("カリキュラムid:"+dlt_curriculums_id);
+                console.log("配信日時id:"+hundle_id_value);
+                console.log("送信url:"+delete_url);
 
                 $.ajax({
                     url: delete_url, //リクエスト先のurl
