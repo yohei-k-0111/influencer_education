@@ -24,9 +24,9 @@ class CurriculumRequest extends FormRequest
     public function rules() {
         // 授業新規登録・授業更新フォームのバリデーションロジックを定義
         return [
-            'title' => 'required | max:25',
+            'title' => 'required | max:255',
             'video_url' => 'url | max:255 | nullable',
-            'description' => 'max:10 | nullable',
+            'description' => 'max:1000 | nullable',
             'thumbnail' => 'mimes:jpeg,jpg,png | max:2048 | nullable',
         ];
     }
