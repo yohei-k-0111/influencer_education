@@ -44,7 +44,7 @@
                     </li>
                     <li class="form--item__list title-row">
                         <!-- 必須項目（授業名） -->
-                        <label for="crtTitle">{{ "授業名" }}</label>
+                        <label for="crtTitle">{{ "授業名" }}<span class="title-row--required">*</span></label>
                         <input type="text" name="title" id="crtTitle">
                     </li>
                     <li class="form--item__list url-row">
@@ -65,6 +65,7 @@
                             <label for="crtAlwaysDeliveryFlg">{{ "常時公開" }}</label>
                         </div>
                     </li>
+                    <li class="form--item__list title-row--required">{{"* は必須項目です"}}</li>
                 </ul>
                 <div class="form--item form--button">
                     <!-- 登録ボタン -->

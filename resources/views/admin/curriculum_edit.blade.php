@@ -48,7 +48,7 @@
                         </select>
                     </li>
                     <li class="form--item__list title-row">
-                        <label for="editTitle">{{ "授業名" }}</label>
+                        <label for="editTitle">{{ "授業名" }}<span class="title-row--required">*</span></label>
                         <input type="text" value="{{ $curriculum->title }}" name="title" id="editTitle">
                     </li>
                     <li class="form--item__list url-row">
@@ -69,6 +69,7 @@
                             <label for="editAlwaysDeliveryFlg">{{ "常時公開" }}</label>
                         </div>
                     </li>
+                    <li class="form--item__list title-row--required">{{"* は必須項目です"}}</li>
                 </ul>
                 <div class="form--item form--button">
                     <!-- 更新ボタン -->
