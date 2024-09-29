@@ -9,7 +9,7 @@
                 <a href="{{ route('admin.show.curriculum.list') }}">{{ "←戻る" }}</a>
             </div>
             <!-- 画面タイトル -->
-            <h1 class="main-content--header__display-title">配信時間設定</h1>
+            <h1 class="main-content--header__display-title">配信日時設定</h1>
             <!-- 選択中の授業名 -->
             <h2 class="main-content--header__curriculum-title">{{ $curriculum->title }}</h2>
         </div>
