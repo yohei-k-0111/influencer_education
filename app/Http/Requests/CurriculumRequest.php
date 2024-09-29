@@ -27,7 +27,7 @@ class CurriculumRequest extends FormRequest
             'title' => 'required | max:255',
             'video_url' => 'url | max:255 | nullable',
             'description' => 'max:1000 | nullable',
-            'thumbnail' => 'mimes:jpeg,jpg,png | max:2048 | nullable',
+            'thumbnail' => 'mimes:jpeg,jpg,png| max:2048 | nullable',
         ];
     }
 
