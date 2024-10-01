@@ -14,8 +14,8 @@ class CurriculumsController extends Controller
     public function user_stream(Request $request, $id)
     {
         $userId = auth()->user()->id;
-    
-        // 進捗レコードを取得
+
+        // レコードを取得または作成
         $progress = CurriculumProgress::firstOrCreate(
             ['users_id' => $userId, 'curriculums_id' => $id],
             ['clear_flg' => 0] 

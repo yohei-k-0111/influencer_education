@@ -19,7 +19,7 @@ use App\Http\Controllers\ArticlesController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Auth::routes();
 
@@ -42,18 +42,18 @@ Route::get('/clear', [CurriculumsController::class, 'clear'])->name('clear.get')
 // 時間割ページへのルート仮
 Route::get('/jikan-bu', function () {
     return view('jikanbu');
-})->name('jikanbu');
+})->name('jikanbu')->middleware('auth');
 
 // 授業進捗ページへのルート仮
 Route::get('/lessons', function () {
     return view('lessons');
-})->name('lessons');
+})->name('lessons')->middleware('auth');
 
 // プロフィール設定ページへのルート仮
 Route::get('/profile-setting', function () {
     return view('profile-setting');
-})->name('profile-setting');
+})->name('profile-setting')->middleware('auth');
 
 //お知らせページのルート仮
-Route::get('/articles/{id}', [ArticlesController::class, 'show'])->name('articles.show');
+Route::get('/articles/{id}', [ArticlesController::class, 'show'])->name('articles.show')->middleware('auth');
 
