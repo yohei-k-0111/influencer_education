@@ -1,0 +1,94 @@
+.nav-links {
+    display: flex;
+    height: 72px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(2, 244, 244);
+    padding: 0 32px;
+}
+.logout {
+    color: white;
+}
+
+/* article-list */
+.article-list {
+    max-width:800px;
+    padding: 10px 40px;
+    margin-top: 10px;
+}
+table {
+    width: 100%;
+    table-layout: fixed;
+    margin: 30px 0;
+}
+.article-table th {
+    font-size: 18px;
+    height: 4rem;
+}
+.article-table th:first-child {
+    width: 150px;
+}
+.article-table th:nth-child(2) {
+    width: auto;
+}
+.article-table th:nth-child(3) {
+    width: 90px;
+}
+.article-table th:nth-child(4) {
+    width: 60px;
+}
+.article-table td {
+    font-size: 18px;
+    height: 3rem;
+}
+.create-btn {
+    width: 100px;
+}
+.edit-btn {
+    margin-right: 10px;
+    width: 80px;
+}
+.delete-btn {
+    width: 100%;
+}
+.nav {
+    width: 800px;
+}
+
+/* article-create */
+.article-create {
+    max-width:1000px;
+    padding: 10px 40px;
+}
+.article-create > h1 {
+    margin-bottom: 2rem;
+}
+.create-item {
+    display: flex;
+    width: 800px;
+    margin-bottom: 2rem;
+}
+.create-item label {
+    font-size: 18px;
+    width: 90px;
+    flex-shrink: 0;
+}
+.create-item input, .create-item textarea {
+    font-size: 18px;
+    flex-grow: 1;
+    border: 1px solid gray;
+    min-width: 0;
+    box-sizing: border-box;
+}
+.create-submit {
+    text-align: center;
+}
+.create-button {
+    font-size: 20px;
+    text-align: center;
+    margin: 2rem 0;
+    color: white;
+    padding: 0 3rem;
+    border: 1px solid gray;
+    background-color: gray;
+}
